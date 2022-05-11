@@ -395,7 +395,7 @@ function handleGameStatus(){
 function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'rgba(255, 115, 0, 0.2)';
     ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
     handleGameGrid();
     
