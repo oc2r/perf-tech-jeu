@@ -220,13 +220,22 @@ function chooseDefender() {
     
             
             numberOfResources -= defender_cost; 
+        } else {
+            floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
         }
         
     } else if (collision(mouse, card2) && mouse.clicked) {
         chosenDefender = 2;
         console.log(chosenDefender);
-        let verticalPosition = 4 * cellSize + cellGap;
-        defenders.push(new Defender(verticalPosition));
+        if (numberOfResources >= defender_cost ) {
+            let verticalPosition = 4 * cellSize + cellGap;
+            defenders.push(new Defender(verticalPosition));
+    
+            
+            numberOfResources -= defender_cost; 
+        } else {
+            floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
+        }
     }
 
     if (chosenDefender === 1) {
@@ -291,15 +300,7 @@ function handleFloatingMessages() {
     }
 }
 
-canvas.addEventListener('click', function(){
-    let defenderCost = 100;
-    if (numberOfResources >= defenderCost){
-        defenders.push(new Defender(403));
-        numberOfResources -= defenderCost;
-    } else {
-        floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
-    }
-});
+
 
 // enemies
 
