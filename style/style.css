@@ -8,6 +8,7 @@ body {
     height: 600px;
     background: white;
     font-family: 'Orbitron', sans-serif;
+    background-image: url(../assets/background.png);
  }
 
 #container{
