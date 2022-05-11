@@ -1,26 +1,21 @@
-const canvas = document.getElementById('myCanvas1');
+const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
+canvas.width = 900;
+canvas.height = 600;
 
-// const container = document.getElementById('container');
-// container.width = 900;
-// container.height = 600;
-  
 // global variables
-
-    // grid variables
-    const cellSize = 100;
-    const cellGap = 3;
-    const gameGrid = [];
-
+const cellSize = 100;
+const cellGap = 3;
 let numberOfResources = 300;
 let enemiesInterval = 600;
-let defendersInterval = 200;
+let defendersInterval = 600;
 let frame = 0;
 let gameOver = false;
 let score = 0;
 const winningScore = 50;
 let chosenDefender = 1;
 
+const gameGrid = [];
 const defenders = [];
 const enemies = [];
 const enemyPositions = [];
@@ -28,31 +23,13 @@ const defenderPositions = [];
 const projectiles = [];
 const resources = [];
 
-
-
-// definition de la canvas size
-canvas.width = 2000;
-canvas.height = 600;
-
 // mouse
 const mouse = {
     x: 10,
     y: 10,
     width: 0.1,
     height: 0.1,
-    clicked : false,
-};
-
-canvas.addEventListener('mousedown', function(){
-    mouse.clicked = true;
-});
-
-canvas.addEventListener('mouseup', function(){
-    mouse.clicked = false;
-
-});
-
-
+}
 let canvasPosition = canvas.getBoundingClientRect();
 canvas.addEventListener('mousemove', function(e){
     mouse.x = e.x - canvasPosition.left;
@@ -63,27 +40,10 @@ canvas.addEventListener('mouseleave', function(){
     mouse.y = undefined;
 });
 
-// var   derniere_position_de_scroll_connue = 100;
-
-// let getContainer = document.getElementById('container');
-// getContainer.addEventListener("scroll", ()=> {
-//     derniere_position_de_scroll_connue = getContainer.scrollX;
-
-// } );
-
-
-canvas.addEventListener('mouseleave', function(){
-    mouse.y = undefined;
-    mouse.y = undefined;
-});
-
-
-//    GAME BOARD   
-
+// game board
 const controlsBar = {
     width: canvas.width,
     height: cellSize,
-
 }
 class Cell {
     constructor(x, y){
@@ -113,7 +73,6 @@ function handleGameGrid(){
     }
 }
 
-
 // defenders
 const defender1 = new Image();
 defender1.src = "defender1.png";
@@ -130,32 +89,16 @@ class Defender {
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
-        this.chosenDefender = chosenDefender;
     }
     update(){
         this.x += this.movement;
     }
     draw(){
-        // ctx.fillStyle = 'blue';
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.fillStyle = 'gold';
-        // ctx.font = '30px Orbitron';
-        // ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-        if (this.chosenDefender === 1) {
-            ctx.fillStyle = 'yellow';
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-            ctx.fillStyle = 'gold';
-            ctx.font = '30px Orbitron';
-            ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-        }
-        if (this.chosenDefender === 2) {
-            ctx.fillStyle = 'pink';
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-            ctx.fillStyle = 'gold';
-            ctx.font = '30px Orbitron';
-            ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-        
-        }
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = 'gold';
+        ctx.font = '30px Orbitron';
+        ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
     }
 }
 function handleDefenders(){
@@ -186,12 +129,12 @@ function handleDefenders(){
             }
         }
     }
-    // if (frame % defendersInterval === 0 && score < winningScore){
-    //     let verticalPosition = 4 * cellSize + cellGap;
-    //     defenders.push(new Defender(verticalPosition));
-    //     defenderPositions.push(verticalPosition);
-        // if (defendersInterval > 120) defendersInterval += 50;
-    //}
+    if (frame % defendersInterval === 0 && score < winningScore){
+        let verticalPosition = 4 * cellSize + cellGap;
+        defenders.push(new Defender(verticalPosition));
+        defenderPositions.push(verticalPosition);
+        if (defendersInterval > 120) defendersInterval += 50;
+    }
 }
 
 const card1 = {
@@ -211,26 +154,12 @@ const card2 = {
 
 
 function chooseDefender() {
-    let defender_cost =100;
     let card1stroke = 'black';
     let card2stroke = 'black';
-    // change le contour du perso selectionné
-    if (collision(mouse, card1) && mouse.clicked) {
+    if (collision(mouse, card1)) {
         chosenDefender = 1;
-        console.log(chosenDefender);
-        if (numberOfResources >= defender_cost ) {
-            let verticalPosition = 4 * cellSize + cellGap;
-            defenders.push(new Defender(verticalPosition));
-    
-            
-            numberOfResources -= defender_cost; 
-        }
-        
-    } else if (collision(mouse, card2) && mouse.clicked) {
+    } else if (collision(mouse, card1)) {
         chosenDefender = 2;
-        console.log(chosenDefender);
-        let verticalPosition = 4 * cellSize + cellGap;
-        defenders.push(new Defender(verticalPosition));
     }
 
     if (chosenDefender === 1) {
@@ -241,9 +170,8 @@ function chooseDefender() {
         card2stroke = 'gold';
     } else {
         card1stroke = 'black';
-        card2stroke = 'black';
+        card2stroke = 'gold';
     }
-
     ctx.lineWidth = 1;
     ctx.fillStyle = 'rgba(0,0,0,0.2)';
     ctx.fillRect(card1.x, card1.y, card1.width, card1.height);
@@ -256,31 +184,6 @@ function chooseDefender() {
     ctx.strokeRect( card2.x, card2.y, card2.width, card2.height);
 
 }
-
-// const floatingMessages = [];
-// class floatingMessages { 
-//     constructor(value, x, y, size, color){
-//         this.value = value;
-//         this.x = x;
-//         this.y = y;
-//         this.size = size;
-//         this.lifeSpan = 0;
-//         this.color = color;
-//         this.opacity= 1;
-//     }
-//     update(){
-//         this.y -= 0.3;
-//         this.lefespan +=1;
-//         if(this.opacity > 0.01) this.opacity -= 0.01;
-//     }
-
-//     draw(){
-//         ctx.fillStyle = this.color;
-//         ctx.globalAlpha = this.opacity;
-//         ctx.globalAlpha = 1;
-//     }
-
-// }
 
 
 // enemies
@@ -296,7 +199,6 @@ class Enemy {
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
-        this.chosenDefender = chosenDefender;
     }
     update(){
         this.x -= this.movement;
@@ -337,17 +239,15 @@ function handleEnemies(){
 // utilities
 
 function handleGameStatus(){
-    // ctx.fillStyle = 'red';
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
-    // ctx.fillStyle = 'black';
-    // ctx.font = '30px Orbitron';
-    // ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.fillStyle = 'black';
+    ctx.font = '30px Orbitron';
+    ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
 
     ctx.fillStyle = 'gold';
-    
     ctx.font = '30px Orbitron';
-    ctx.fillText('Score: ' + score,  450, 40);
-   
+    ctx.fillText('Score: ' + score, 450, 40);
     ctx.fillText('Resources: ' + numberOfResources, 450, 80);
     if (gameOver){
         ctx.fillStyle = 'black';
@@ -365,11 +265,9 @@ function handleGameStatus(){
 
 function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
     ctx.fillStyle = 'blue';
     ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
     handleGameGrid();
-  
     handleDefenders();
     chooseDefender();
     handleEnemies();
@@ -389,9 +287,6 @@ function collision(first, second){
     };
 };
 
-
-// coucou
 window.addEventListener('resize', function(){
     canvasPosition = canvas.getBoundingClientRect();
 })
-
