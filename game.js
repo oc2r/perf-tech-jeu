@@ -14,7 +14,7 @@ const ctx = canvas.getContext('2d');
 
 let numberOfResources = 300;
 let enemiesInterval = 600;
-let defendersInterval = 600;
+let defendersInterval = 200;
 let frame = 0;
 let gameOver = false;
 let score = 0;
@@ -48,7 +48,7 @@ canvas.addEventListener('mousedown', function(){
 });
 
 canvas.addEventListener('mouseup', function(){
-    mouse.clicked = fasle;
+    mouse.clicked = false;
 
 });
 
@@ -58,6 +58,14 @@ canvas.addEventListener('mousemove', function(e){
     mouse.x = e.x - canvasPosition.left;
     mouse.y = e.y - canvasPosition.top;
 });
+
+// var   derniere_position_de_scroll_connue = 100;
+
+// let getContainer = document.getElementById('container');
+// getContainer.addEventListener("scroll", ()=> {
+//     derniere_position_de_scroll_connue = getContainer.scrollX;
+
+// } );
 
 
 canvas.addEventListener('mouseleave', function(){
@@ -191,7 +199,7 @@ function chooseDefender() {
     // change le contour du perso selectionné
     if (collision(mouse, card1) && mouse.clicked) {
         chosenDefender = 1;
-    } else if (collision(mouse, card2)) {
+    } else if (collision(mouse, card2) && mouse.clicked) {
         chosenDefender = 2;
     }
 
@@ -218,6 +226,31 @@ function chooseDefender() {
     ctx.strokeRect( card2.x, card2.y, card2.width, card2.height);
 
 }
+
+// const floatingMessages = [];
+// class floatingMessages { 
+//     constructor(value, x, y, size, color){
+//         this.value = value;
+//         this.x = x;
+//         this.y = y;
+//         this.size = size;
+//         this.lifeSpan = 0;
+//         this.color = color;
+//         this.opacity= 1;
+//     }
+//     update(){
+//         this.y -= 0.3;
+//         this.lefespan +=1;
+//         if(this.opacity > 0.01) this.opacity -= 0.01;
+//     }
+
+//     draw(){
+//         ctx.fillStyle = this.color;
+//         ctx.globalAlpha = this.opacity;
+//         ctx.globalAlpha = 1;
+//     }
+
+// }
 
 
 // enemies
@@ -325,7 +358,10 @@ function collision(first, second){
         return true;
     };
 };
+
+
 // coucou
 window.addEventListener('resize', function(){
     canvasPosition = canvas.getBoundingClientRect();
 })
+
