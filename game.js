@@ -182,12 +182,12 @@ function handleDefenders(){
             }
         }
     }
-    if (frame % defendersInterval === 0 && score < winningScore){
-        let verticalPosition = 4 * cellSize + cellGap;
-        defenders.push(new Defender(verticalPosition));
-        defenderPositions.push(verticalPosition);
-        if (defendersInterval > 120) defendersInterval += 50;
-    }
+    // if (frame % defendersInterval === 0 && score < winningScore){
+    //     let verticalPosition = 4 * cellSize + cellGap;
+    //     defenders.push(new Defender(verticalPosition));
+    //     defenderPositions.push(verticalPosition);
+        // if (defendersInterval > 120) defendersInterval += 50;
+    //}
 }
 
 const card1 = {
@@ -207,15 +207,26 @@ const card2 = {
 
 
 function chooseDefender() {
+    let defender_cost =100;
     let card1stroke = 'black';
     let card2stroke = 'black';
     // change le contour du perso selectionné
     if (collision(mouse, card1) && mouse.clicked) {
         chosenDefender = 1;
         console.log(chosenDefender);
+        if (numberOfResources >= defender_cost ) {
+            let verticalPosition = 4 * cellSize + cellGap;
+            defenders.push(new Defender(verticalPosition));
+    
+            
+            numberOfResources -= defender_cost; 
+        }
+        
     } else if (collision(mouse, card2) && mouse.clicked) {
         chosenDefender = 2;
         console.log(chosenDefender);
+        let verticalPosition = 4 * cellSize + cellGap;
+        defenders.push(new Defender(verticalPosition));
     }
 
     if (chosenDefender === 1) {
