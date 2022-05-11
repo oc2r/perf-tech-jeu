@@ -227,31 +227,53 @@ function chooseDefender() {
 
 }
 
-// const floatingMessages = [];
-// class floatingMessages { 
-//     constructor(value, x, y, size, color){
-//         this.value = value;
-//         this.x = x;
-//         this.y = y;
-//         this.size = size;
-//         this.lifeSpan = 0;
-//         this.color = color;
-//         this.opacity= 1;
-//     }
-//     update(){
-//         this.y -= 0.3;
-//         this.lefespan +=1;
-//         if(this.opacity > 0.01) this.opacity -= 0.01;
-//     }
+const floatingMessages = [];
+class floatingMessage { 
+    constructor(value, x, y, size, color){
+        this.value = value;
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.lifeSpan = 0;
+        this.color = color;
+        this.opacity= 1;
+    }
+    update(){
+        this.y -= 0.3;
+        this.lefespan +=1;
+        if(this.opacity > 0.01) this.opacity -= 0.01;
+    }
 
-//     draw(){
-//         ctx.fillStyle = this.color;
-//         ctx.globalAlpha = this.opacity;
-//         ctx.globalAlpha = 1;
-//     }
+    draw(){
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.globalAlpha = 1;
+        ctx.font= this.size + 'px Orbitron';
+        ctx.fillText(this.value, this.x, this.y);
+    }
 
-// }
+}
 
+function handleFloatingMessages() {
+    for (let i=0; i < floatingMessages.length; i++) {
+        floatingMessages[i].update();
+        floatingMessages[i].draw();
+        if (floatingMessages[i].lifeSpan >= 50){
+            floatingMessages.splice(i, 1);
+            i--;
+        }
+    }
+}
+
+canvas.addEventListener('click', function(){
+    let defenderCost = 100;
+    if (numberOfResources >= defenderCost){
+        defenders.push(new Defender(403));
+        numberOfResources -= defenderCost;
+    } else {
+        floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
+    }
+});
 
 // enemies
 
@@ -304,6 +326,7 @@ function handleEnemies(){
     }
 }
 
+
 // utilities
 
 function handleGameStatus(){
@@ -344,6 +367,7 @@ function animate(){
     chooseDefender();
     handleEnemies();
     handleGameStatus();
+    handleFloatingMessages();
     frame++;
     if (!gameOver) requestAnimationFrame(animate);
 }
