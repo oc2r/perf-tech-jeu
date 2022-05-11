@@ -325,7 +325,7 @@ function collision(first, second){
         return true;
     };
 };
-
+// coucou
 window.addEventListener('resize', function(){
     canvasPosition = canvas.getBoundingClientRect();
 })
