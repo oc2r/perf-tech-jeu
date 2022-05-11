@@ -229,8 +229,13 @@ function chooseDefender() {
     } else if (collision(mouse, card2) && mouse.clicked) {
         chosenDefender = 2;
         console.log(chosenDefender);
-        let verticalPosition = 4 * cellSize + cellGap;
-        defenders.push(new Defender(verticalPosition));
+        if (numberOfResources >= defender_cost ) {
+            let verticalPosition = 4 * cellSize + cellGap;
+            defenders.push(new Defender(verticalPosition));
+    
+            
+            numberOfResources -= defender_cost; 
+        };
     }
 
     if (chosenDefender === 1) {
