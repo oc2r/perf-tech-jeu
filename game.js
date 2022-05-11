@@ -126,18 +126,31 @@ class Defender {
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
+        this.chosenDefender = chosenDefender;
     }
     update(){
         this.x += this.movement;
     }
     draw(){
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = 'gold';
-        ctx.font = '30px Orbitron';
-        ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-        if (chosenDefender === 1) {
-
+        // ctx.fillStyle = 'blue';
+        // ctx.fillRect(this.x, this.y, this.width, this.height);
+        // ctx.fillStyle = 'gold';
+        // ctx.font = '30px Orbitron';
+        // ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+        if (this.chosenDefender === 1) {
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = 'gold';
+            ctx.font = '30px Orbitron';
+            ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+        }
+        if (this.chosenDefender === 2) {
+            ctx.fillStyle = 'pink';
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = 'gold';
+            ctx.font = '30px Orbitron';
+            ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+        
         }
     }
 }
@@ -199,8 +212,10 @@ function chooseDefender() {
     // change le contour du perso selectionné
     if (collision(mouse, card1) && mouse.clicked) {
         chosenDefender = 1;
+        console.log(chosenDefender);
     } else if (collision(mouse, card2) && mouse.clicked) {
         chosenDefender = 2;
+        console.log(chosenDefender);
     }
 
     if (chosenDefender === 1) {
