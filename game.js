@@ -180,6 +180,7 @@ function handleDefenders(){
                 i--;
                 enemies[j].movement = enemies[j].speed;
             }
+            
         }
     }
     // if (frame % defendersInterval === 0 && score < winningScore){
@@ -204,16 +205,23 @@ const card2 = {
     height: 85
 }
 
+let can_click = true;
 
+window.addEventListener('mouseup', ()=>{
+    can_click = true;
+});
 
 function chooseDefender() {
     let defender_cost =100;
     let card1stroke = 'black';
     let card2stroke = 'black';
     // change le contour du perso selectionné
-    if (collision(mouse, card1) && mouse.clicked) {
+
+    if (collision(mouse, card1) && mouse.clicked && can_click == true) {
+        
         chosenDefender = 1;
         console.log(chosenDefender);
+        can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
             defenders.push(new Defender(verticalPosition));
@@ -224,9 +232,10 @@ function chooseDefender() {
             floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
         }
         
-    } else if (collision(mouse, card2) && mouse.clicked) {
+    } else if (collision(mouse, card2) && mouse.clicked && can_click == true) {
         chosenDefender = 2;
         console.log(chosenDefender);
+        can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
             defenders.push(new Defender(verticalPosition));
@@ -389,7 +398,7 @@ function animate(){
     ctx.fillStyle = 'blue';
     ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
     handleGameGrid();
-  
+    
     handleDefenders();
     chooseDefender();
     handleEnemies();
