@@ -111,9 +111,7 @@ function handleGameGrid(){
         gameGrid[i].draw();
     }
 }
-
 //Projectiles
-// DENFENDER
 
 class Projectiles {
     constructor(x,y) {
@@ -122,7 +120,7 @@ class Projectiles {
         this.width = 10;
         this.height = 10;
         this.power = 20;
-        this.speed = 5;
+        this.speed = 10;
     }
     update() {
         this.x += this.speed;
@@ -152,7 +150,8 @@ function handleProjectiles() {
         }
     }
 }
-// defenders
+// DENFENDER
+
 // création des différents types d
 const defenderTypes = [];
 const defender1 = new Image();
@@ -173,12 +172,8 @@ class Defender {
         this.defenserType = defenserType;
         this.movement = movement;
 
-
-
         this.maxHealth = this.health;
         this.chosenDefender = chosenDefender;
-        this.timer = 0;
-    }
         this.defenderType = defenderTypes[0];
         this.frameX = 0;
         this.frameY = 0;
@@ -187,15 +182,14 @@ class Defender {
         this.spriteWidthUser1 = 150;
         this.spriteHeightUser1 = 150;
         this.spriteWidthUser2 = 100;
-        this.spriteHeightUser2 = 100;}
+        this.spriteHeightUser2 = 100;
+        this.timer = 0;
+    }
 
     update(){
         this.x += this.movement;
         this.timer++;
-        if(this.timer % 100 === 0) {
-            projectiles.push(new Projectiles(this.x + 70, this.y + 50));
-            // console.log(projectiles);
-        }
+        
         if (frame % 10 === 0) {
             if (this.frameX < this.maxFrame) this.frameX++;
             else this.frameX = this.minFrame;
@@ -217,9 +211,12 @@ class Defender {
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-            handleProjectiles();
-        
             ctx.drawImage(defenderTypes[1], this.frameX * this.spriteWidthUser2, 0, this.spriteWidthUser2, this.spriteHeightUser2, this.x, this.y, this.width, this.height);
+            if(this.timer % 80 === 0) {
+                projectiles.push(new Projectiles(this.x + 70, this.y + 50));
+            }
+            handleProjectiles();
+
 
         }
     }
@@ -252,7 +249,7 @@ function handleDefenders(){
 
                 // console.log(enemies[j].movement);
 
-            } else if (enemies[i] && enemies[i].health <= 0) {
+            } else if (enemies[j] && enemies[j].health <= 0) {
                 defenders[i].movement = Math.random() * 2.4 + 2.9;
 
             }
@@ -301,7 +298,7 @@ function chooseDefender() {
         can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
-            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 10, 300, defenderTypes[1] ));
+            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 30, 300, defenderTypes[0] ));
 
             numberOfResources -= defender_cost; 
         } else {
@@ -314,7 +311,7 @@ function chooseDefender() {
         can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
-            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 10, 300, defenderTypes[1] ));
+            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 0, 300, defenderTypes[1] ));
     
             
             numberOfResources -= defender_cost; 
@@ -525,7 +522,6 @@ function animate(){
     chooseDefender();
     handleEnemies();
     handleGameStatus();
-    // handleProjectiles();
     handleFloatingMessages();
     frame++;
     if (!gameOver) requestAnimationFrame(animate);
