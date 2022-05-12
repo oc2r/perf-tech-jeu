@@ -111,10 +111,13 @@ function handleGameGrid(){
 
 
 // defenders
+const defenderTypes = [];
 const defender1 = new Image();
-defender1.src = "defender1.png";
+defender1.src = '/assets/personnages/user_1/Run.png';
+defenderTypes.push(defender1);
 const defender2 = new Image();
-defender2.src = "defender2.png";
+defender2.src = '/assets/personnages/user_2/Character/Run.png';
+defenderTypes.push(defender2);
 
 class Defender {
     constructor(verticalPosition){
@@ -127,22 +130,33 @@ class Defender {
         this.health = 100;
         this.maxHealth = this.health;
         this.chosenDefender = chosenDefender;
+        this.defenderType = defenderTypes[0];
+        this.frameX = 0;
+        this.frameY = 0;
+        this.minFrame = 0;
+        this.maxFrame = 7;
+        this.spriteWidthUser1 = 150;
+        this.spriteHeightUser1 = 150;
+        this.spriteWidthUser2 = 100;
+        this.spriteHeightUser2 = 100;
     }
     update(){
         this.x += this.movement;
+        if (frame % 10 === 0) {
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = this.minFrame;
+        }
+    
     }
     draw(){
-        // ctx.fillStyle = 'blue';
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.fillStyle = 'gold';
-        // ctx.font = '30px Orbitron';
-        // ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
         if (this.chosenDefender === 1) {
             ctx.fillStyle = 'yellow';
             ctx.fillRect(this.x, this.y, this.width, this.height);
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+            ctx.drawImage(this.defenderType, this.frameX * this.spriteWidthUser1, 0, this.spriteWidthUser1, this.spriteHeightUser1, this.x, this.y, this.width, this.height);
+
         }
         if (this.chosenDefender === 2) {
             ctx.fillStyle = 'pink';
@@ -150,7 +164,8 @@ class Defender {
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-        
+            ctx.drawImage(defenderTypes[1], this.frameX * this.spriteWidthUser2, 0, this.spriteWidthUser2, this.spriteHeightUser2, this.x, this.y, this.width, this.height);
+       
         }
     }
 }
@@ -313,21 +328,37 @@ function handleFloatingMessages() {
 
 // enemies
 
+const enemyTypes = [];
+const enemy1 = new Image();
+enemy1.src = '/assets/personnages/enemy_1/enemy1.png';
+// enemy1.src = 'enemy1.png';
+enemyTypes.push(enemy1);
+
 class Enemy {
     constructor(verticalPosition){
         this.x = canvas.width;
         // this.x = 0;
         this.y = verticalPosition;
-        this.width = cellSize - cellGap * 2;
-        this.height = cellSize - cellGap * 2;
+        this.width = 1.5 * cellSize - cellGap * 2;
+        this.height = 1.5 * cellSize - cellGap * 2;
         this.speed = Math.random() * 0.2 + 0.4;
         this.movement = this.speed;
         this.health = 100;
         this.maxHealth = this.health;
-        this.chosenDefender = chosenDefender;
+        this.enemyType = enemyTypes[0];
+        this.frameX = 0;
+        this.frameY = 0;
+        this.minFrame = 0;
+        this.maxFrame = 7;
+        this.spriteWidth = 150;
+        this.spriteHeight = 150;
     }
     update(){
         this.x -= this.movement;
+        if (frame % 10 === 0) {
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = this.minFrame;
+        }
     }
     draw(){
         ctx.fillStyle = 'red';
@@ -335,6 +366,8 @@ class Enemy {
         ctx.fillStyle = 'black';
         ctx.font = '30px Orbitron';
         ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+        // ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+        ctx.drawImage(this.enemyType, this.frameX * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
 }
 function handleEnemies(){
