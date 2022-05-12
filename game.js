@@ -109,7 +109,45 @@ function handleGameGrid(){
     }
 }
 
+//Projectiles
 
+class Projectiles {
+    constructor(x,y) {
+        this.x = x;
+        this.y = y;
+        this.width = 10;
+        this.height = 10;
+        this.power = 20;
+        this.speed = 5;
+    }
+    update() {
+        this.x += this.speed;
+    }
+    draw() {
+        ctx.fillStyle = "black";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.width, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function handleProjectiles() {
+    for (let i = 0; i < projectiles.length; i++) {
+        projectiles[i].update();
+        projectiles[i].draw();
+        for (let j = 0; j < enemies.length; j++) {
+            if (enemies[j] && projectiles[i] && collision(projectiles[i], enemies[j])) {
+                enemies[j].health -= projectiles[i].power;
+                projectiles.splice(i,1);
+            i--;
+            }
+        }
+        if (projectiles[i] && projectiles[i].x > canvas.width - cellSize) {
+            projectiles.splice(i,1);
+            i--;
+        }
+    }
+}
 // defenders
 const defender1 = new Image();
 defender1.src = "defender1.png";
@@ -127,9 +165,15 @@ class Defender {
         this.health = 100;
         this.maxHealth = this.health;
         this.chosenDefender = chosenDefender;
+        this.timer = 0;
     }
     update(){
         this.x += this.movement;
+        this.timer++;
+        if(this.timer % 100 === 0) {
+            projectiles.push(new Projectiles(this.x + 70, this.y + 50));
+            // console.log(projectiles);
+        }
     }
     draw(){
         // ctx.fillStyle = 'blue';
@@ -150,6 +194,7 @@ class Defender {
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+            handleProjectiles();
         
         }
     }
@@ -403,6 +448,7 @@ function animate(){
     chooseDefender();
     handleEnemies();
     handleGameStatus();
+    // handleProjectiles();
     handleFloatingMessages();
     frame++;
     if (!gameOver) requestAnimationFrame(animate);
