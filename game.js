@@ -1,4 +1,6 @@
 const canvas = document.getElementById('myCanvas1');
+ 
+const container = document.getElementById('container');
 const ctx = canvas.getContext('2d');
 
 // const container = document.getElementById('container');
@@ -31,7 +33,7 @@ const resources = [];
 
 
 // definition de la canvas size
-canvas.width = 2000;
+canvas.width = 2500;
 canvas.height = 600;
 
 // mouse
@@ -53,8 +55,9 @@ canvas.addEventListener('mouseup', function(){
 });
 
 
-let canvasPosition = canvas.getBoundingClientRect();
-canvas.addEventListener('mousemove', function(e){
+let canvasPosition = container.getBoundingClientRect();
+console.log(canvasPosition);
+container.addEventListener('mousemove', function(e){
     mouse.x = e.x - canvasPosition.left;
     mouse.y = e.y - canvasPosition.top;
 });
@@ -109,40 +112,58 @@ function handleGameGrid(){
     }
 }
 
+// DENFENDER
 
-// defenders
+// création des différents types d
+const defenderTypes = [];
 const defender1 = new Image();
-defender1.src = "defender1.png";
+defender1.src = './assets/personnages/user_1/Run.png';
+defenderTypes.push(defender1);
 const defender2 = new Image();
-defender2.src = "defender2.png";
+defender2.src = './assets/personnages/user_2/Character/Run.png';
+defenderTypes.push(defender2);
 
 class Defender {
-    constructor(verticalPosition){
+    constructor(verticalPosition, movement, damage, health, defenserType){
         this.x = 0;
         this.y = verticalPosition;
         this.width = cellSize - cellGap * 2;
         this.height = cellSize - cellGap * 2;
-        this.speed = Math.random() * 0.2 + 0.4;
-        this.movement = this.speed;
-        this.health = 100;
+        this.damage = damage;
+        this.health = health;
+        this.defenserType = defenserType;
+        this.movement = movement;
+
+
+
         this.maxHealth = this.health;
         this.chosenDefender = chosenDefender;
-    }
+        this.defenderType = defenderTypes[0];
+        this.frameX = 0;
+        this.frameY = 0;
+        this.minFrame = 0;
+        this.maxFrame = 7;
+        this.spriteWidthUser1 = 150;
+        this.spriteHeightUser1 = 150;
+        this.spriteWidthUser2 = 100;
+        this.spriteHeightUser2 = 100;}
+
     update(){
         this.x += this.movement;
+        if (frame % 10 === 0) {
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = this.minFrame;
+        }
     }
-    draw(){
-        // ctx.fillStyle = 'blue';
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.fillStyle = 'gold';
-        // ctx.font = '30px Orbitron';
-        // ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+     draw(){
         if (this.chosenDefender === 1) {
             ctx.fillStyle = 'yellow';
             ctx.fillRect(this.x, this.y, this.width, this.height);
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+            ctx.drawImage(this.defenderType, this.frameX * this.spriteWidthUser1, 0, this.spriteWidthUser1, this.spriteHeightUser1, this.x -100 , this.y - 100, 300, 300);
+
         }
         if (this.chosenDefender === 2) {
             ctx.fillStyle = 'pink';
@@ -150,7 +171,8 @@ class Defender {
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-        
+            ctx.drawImage(defenderTypes[1], this.frameX * this.spriteWidthUser2, 0, this.spriteWidthUser2, this.spriteHeightUser2, this.x, this.y, this.width, this.height);
+
         }
     }
 }
@@ -171,17 +193,24 @@ function handleDefenders(){
             if (defenders[i] && collision(defenders[i], enemies[j])){
                 enemies[j].movement = 0;
                 defenders[i].movement = 0;
-                defenders[i].health -= 1;
-                enemies[j].health -= 1;
-
+                defenders[i].health -= enemies[j].damage ;
+                enemies[j].health -= defenders[i].damage;
+                // console.log("speed" + enemies[j].movement);
             }
             if (defenders[i] && defenders[i].health <= 0){
                 defenders.splice(i, 1);
                 i--;
-                enemies[j].movement = enemies[j].speed;
+                enemies[j].movement = Math.random() * 2.4 + 2.9;
+
+                // console.log(enemies[j].movement);
+
+            } else if (enemies[i] && enemies[i].health <= 0) {
+                defenders[i].movement = Math.random() * 2.4 + 2.9;
+
             }
-            
+  
         }
+
     }
     // if (frame % defendersInterval === 0 && score < winningScore){
     //     let verticalPosition = 4 * cellSize + cellGap;
@@ -224,9 +253,8 @@ function chooseDefender() {
         can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
-            defenders.push(new Defender(verticalPosition));
-    
-            
+            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 10, 300, defenderTypes[1] ));
+
             numberOfResources -= defender_cost; 
         } else {
             floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
@@ -238,7 +266,7 @@ function chooseDefender() {
         can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
-            defenders.push(new Defender(verticalPosition));
+            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 10, 300, defenderTypes[1] ));
     
             
             numberOfResources -= defender_cost; 
@@ -310,24 +338,47 @@ function handleFloatingMessages() {
 }
 
 
-
 // enemies
+const enemyTypes = [];
+const enemy_weak = new Image();
+enemy_weak.src = './assets/personnages/enemy_2/run.png';
+enemyTypes.push(enemy_weak);
+
+const enemy_shooter = new Image();
+enemy_shooter.src = './assets/personnages/enemy_1/flight.png';
+enemyTypes.push(enemy_shooter);
+
+const enemy_strong = new Image();
+enemy_strong.src = './assets/personnages/enemy_3/Move.png';
+enemyTypes.push(enemy_strong);
 
 class Enemy {
-    constructor(verticalPosition){
+    constructor(verticalPosition, movement, damage, health, enemyType){
         this.x = canvas.width;
         // this.x = 0;
         this.y = verticalPosition;
-        this.width = cellSize - cellGap * 2;
-        this.height = cellSize - cellGap * 2;
-        this.speed = Math.random() * 0.2 + 0.4;
-        this.movement = this.speed;
-        this.health = 100;
+        this.width =  cellSize - cellGap * 2;
+        this.height =  cellSize - cellGap *2;
+        // this.speed = Math.random() * 0.4 + 0.9;
+        this.movement = movement;
+        this.damage = damage;
+        this.health = health;
         this.maxHealth = this.health;
-        this.chosenDefender = chosenDefender;
+        // this.enemyType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+        this.enemyType = enemyType
+        this.frameX = 0;
+        this.frameY = 0;
+        this.minFrame = 0;
+        this.maxFrame = 7;
+        this.spriteWidth = 150;
+        this.spriteHeight = 150;
     }
     update(){
         this.x -= this.movement;
+        if (frame % 10 === 0) {
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = this.minFrame;
+        }
     }
     draw(){
         ctx.fillStyle = 'red';
@@ -335,6 +386,8 @@ class Enemy {
         ctx.fillStyle = 'black';
         ctx.font = '30px Orbitron';
         ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+        // ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+        ctx.drawImage(this.enemyType, this.frameX * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x - 100, this.y- 100, 300, 300);
     }
 }
 function handleEnemies(){
@@ -352,14 +405,35 @@ function handleEnemies(){
             enemyPositions.splice(findThisIndex, 1);
             enemies.splice(i, 1);
             i--;
-          }
+
+        }
+        for (let j = 0; j < enemies.length; j++){
+            if (enemies[i] && enemies[i].health <= 0){
+                enemies.splice(i, 1);
+                i--;
+                defenders[j].movement = Math.random() * 2.4 + 2.9;
+                // console.log(defenders[j].movement)
+            }
+        }
+
     }
     if (frame % enemiesInterval === 0 && score < winningScore){
         let verticalPosition = 4 * cellSize + cellGap;
-        enemies.push(new Enemy(verticalPosition));
+        if(Math.random()*100 < 90){
+         
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 30, 300, enemyTypes[2]));
+        }
+        else if(Math.random()*100 > 45){
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, 100, enemyTypes[1]));
+        }
+        else if(Math.random()*100 > 0){
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, 100, enemyTypes[0]));
+        }
+        
         enemyPositions.push(verticalPosition);
         if (enemiesInterval > 120) enemiesInterval -= 50;
     }
+
 }
 
 
