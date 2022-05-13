@@ -2,13 +2,7 @@ const canvas = document.getElementById('myCanvas1');
  
 const container = document.getElementById('container');
 const ctx = canvas.getContext('2d');
-// function mousemove(event){
-//    pageX = event.pageX;
-//     pageY = event.pageY; 
-  
-// }
 
-// canvas.addEventListener('mousemove', mousemove);
 // const container = document.getElementById('container');
 // container.width = 900;
 // container.height = 600;
@@ -20,7 +14,7 @@ const ctx = canvas.getContext('2d');
     const cellGap = 3;
     const gameGrid = [];
 
-let numberOfResources = 900;
+let numberOfResources = 300;
 let enemiesInterval = 600;
 let defendersInterval = 200;
 let frame = 0;
@@ -68,11 +62,14 @@ container.addEventListener('mousemove', function(e){
     mouse.x = e.x - canvasPosition.left;
     mouse.y = e.y - canvasPosition.top;
 });
-const scrollDemo = document.querySelector("#container");
-let positionX = 0;
-scrollDemo.addEventListener("scroll", event => {
-    positionX =  scrollDemo.scrollLeft - canvasPosition.left;
-});
+
+// var   derniere_position_de_scroll_connue = 100;
+
+// let getContainer = document.getElementById('container');
+// getContainer.addEventListener("scroll", ()=> {
+//     derniere_position_de_scroll_connue = getContainer.scrollX;
+
+// } );
 
 
 canvas.addEventListener('mouseleave', function(){
@@ -304,14 +301,14 @@ function handleDefenders(){
     //}
 }
 
-let card1 = {
-    x: 10 ,
+const card1 = {
+    x: 10,
     y: 10,
     width: 70,
     height: 85
 }
 
-let card2 = {
+const card2 = {
     x: 90,
     y: 10,
     width: 70,
@@ -342,7 +339,7 @@ function chooseDefender() {
 
             numberOfResources -= defender_cost; 
         } else {
-            floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 20, 'orange'));
+            floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
         }
         
     } else if (collision(mouse, card2) && mouse.clicked && can_click == true) {
@@ -356,7 +353,7 @@ function chooseDefender() {
             
             numberOfResources -= defender_cost; 
         } else {
-            floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 20, 'orange'));
+            floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
         }
     }
 
@@ -373,14 +370,14 @@ function chooseDefender() {
 
     ctx.lineWidth = 1;
     ctx.fillStyle = 'rgba(0,0,0,0.2)';
-    ctx.fillRect(card1.x+positionX, card1.y, card1.width, card1.height);
+    ctx.fillRect(card1.x, card1.y, card1.width, card1.height);
     ctx.strokeStyle = card1stroke;
-    ctx.strokeRect(card1.x+positionX, card1.y, card1.width, card1.height)
+    ctx.strokeRect( card1.x, card1.y, card1.width, card1.height)
     // ctx.drawImage(defender1, 0, 0, 194, 194, 0, 5, 194/2, 194/2);
-    ctx.fillRect(card2.x+positionX, card2.y, card2.width, card2.height);
+    ctx.fillRect(card2.x, card2.y, card2.width, card2.height);
     // ctx.drawImage(defender2, 0, 0, 194, 194, 0, 5, 194/2, 194/2);
     ctx.strokeStyle = card2stroke;
-    ctx.strokeRect( card2.x+positionX, card2.y, card2.width, card2.height);
+    ctx.strokeRect( card2.x, card2.y, card2.width, card2.height);
 
 }
 
@@ -398,8 +395,8 @@ class floatingMessage {
     }
     update(){
         this.y -= 0.3;
-        this.lifeSpan +=1;
-        if(this.opacity > 0.01) this.opacity -= 0.03;
+        this.lefespan +=1;
+        if(this.opacity > 0.01) this.opacity -= 0.01;
     }
 
     draw(){
@@ -480,11 +477,6 @@ function handleEnemies(){
     for (let i = 0; i < enemies.length; i++){
         enemies[i].update();
         enemies[i].draw();
-        if (enemyPositions.indexOf(defenders[i].y) !== -1){
-            defenders[i].shooting = true;
-        } else {
-            defenders[i].shooting = false;
-        }
         if (enemies[i].x < 0){
             gameOver = true;
         }
@@ -526,14 +518,8 @@ function handleEnemies(){
     }
 
 }
-// var dernier_positionX = 0;
-// let canvas_container= document.getElementById('container');
-// canvas_container.addEventListener = ('scroll', function(e){
-//     dernier_positionX= canvas_container.scrollX;
-//     console.log(dernier_positionX);
-// });
+//PAUSE
 
-// var w = 450+dernier_positionX; 
 
 
 // utilities
@@ -548,9 +534,9 @@ function handleGameStatus(){
     ctx.fillStyle = 'gold';
     
     ctx.font = '30px Orbitron';
-    ctx.fillText('Score: ' + score, 450+positionX, 40);
+    ctx.fillText('Score: ' + score,  450, 40);
    
-    ctx.fillText('Resources: ' + numberOfResources, 450+positionX, 80);
+    ctx.fillText('Resources: ' + numberOfResources, 450, 80);
     if (gameOver){
         ctx.fillStyle = 'black';
         ctx.font = '90px Orbitron';
@@ -573,7 +559,7 @@ function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     ctx.fillStyle = 'rgba(255, 115, 0, 0.2)';
-    ctx.fillRect(0,0, controlsBar.width, controlsBar.height);
+    ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
     handleGameGrid();
     handleDefenders();
     chooseDefender();
