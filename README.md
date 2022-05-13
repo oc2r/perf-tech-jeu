@@ -6,7 +6,7 @@ Notre jeu vidéo est un tower defense. C’est un jeu qui se joue seul et à la 
 L’objectif du joueur est donc double. Il doit défendre sa tour contre des vagues d’ennemis et réussir à s’approcher de la tour ennemie pour la détruire. C’est donc un jeu de stratégie car en fonction des soldats que choisit d’invoquer le joueur et du tempo avec lequel il décide de les invoquer, il pourra ou non réussir le niveau.  
 
 # Contributing : 
-mettre le lien du contributing.pm
+https://github.com/oc2r/perf-tech-jeu/blob/main/contributing.md
 
 # Précisions : 
 - Durée du projet : 5 jours
