@@ -28,6 +28,7 @@ $currentUsers =  getUrrentUser($user);
        }
     ?>
 
+
 <div class="deco">
-    <a href="?action=deconnexion" class="button">Déconnexion</a>
+    <a href="?action=deconnexion" class="btn_deco">Déconnexion</a>
     </div>

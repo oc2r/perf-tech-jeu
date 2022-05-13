@@ -32,7 +32,7 @@ if($_POST) {
             $_SESSION['membre']['login'] = $membre['login'];
 
             //je redirige vers la page d'acceuil
-            header('location:../home.php');
+            header('location:../gameDispay.html');
 
         } else {
             //le mdp est incorrect :

@@ -15,7 +15,7 @@ const ctx = canvas.getContext('2d');
     const gameGrid = [];
 
 let numberOfResources = 300;
-let enemiesInterval = 600;
+let enemiesInterval = 300;
 let defendersInterval = 200;
 let frame = 0;
 let gameOver = false;
@@ -24,7 +24,7 @@ const winningScore = 50;
 let chosenDefender = 1;
 
 
-const defenders = [];
+let defenders = [];
 const enemies = [];
 const enemyPositions = [];
 const defenderPositions = [];
@@ -254,23 +254,18 @@ function handleDefenders(){
             score += gainedResources;
             const findThisIndex = defenderPositions.indexOf(defenders[i].y);
             defenderPositions.splice(findThisIndex, 1);
-            defenders.splice(i, 1);
-            i--;
+            // defenders.splice(i, 1);
+            // i--;
           }
           for (let j = 0; j < enemies.length; j++){
+              console.log(defenders);
+              console.log(i);
               let dist = enemies[j].x - defenders[i].x   ;
             //   console.log("distance" + dist );
-            if (enemies[j].x - defenders[i].x > 1200) {
-                defenders[i].shooting = false;
-                console.log('nice');
-                this.movement = Math.random() * 2.4 + 2.9;
-            } else {
+            if (dist < 800) {
                 defenders[i].shooting = true;
-                
-                
-      
             }
-            if (defenders[i] && collision(defenders[i], enemies[j])){
+            if (defenders[i].health > 0 && collision(defenders[i], enemies[j])){
                 enemies[j].movement = 0;
                 defenders[i].movement = 0;
                 defenders[i].health -= enemies[j].damage ;
@@ -278,8 +273,8 @@ function handleDefenders(){
                 // console.log("speed" + enemies[j].movement);
             }
             if (defenders[i] && defenders[i].health <= 0){
-                defenders.splice(i, 1);
-                i--;
+                // defenders.splice(i, 1);
+                // i--;
                 enemies[j].movement = Math.random() * 2.4 + 2.9;
 
                 // console.log(enemies[j].movement);
@@ -289,16 +284,46 @@ function handleDefenders(){
                 this.shooting = false;
 
             }
-  
+
         }
 
     }
+    defenders = spliceKilledEntities(defenders);
     // if (frame % defendersInterval === 0 && score < winningScore){
     //     let verticalPosition = 4 * cellSize + cellGap;
     //     defenders.push(new Defender(verticalPosition));
     //     defenderPositions.push(verticalPosition);
         // if (defendersInterval > 120) defendersInterval += 50;
     //}
+}
+
+function spliceKilledEntities(defenders){
+    returnedArray = [];
+    for (let i = 0; i < defenders.length; i++){
+        if(defenders[i].health > 0){
+            returnedArray.push(defenders[i]);
+        }
+    }
+
+    return returnedArray;
+}
+
+
+
+
+
+function stopFiring(defenders, enemies){
+    
+    for (let i = 0; i < defenders.length; i++){
+        for (let j = 0; j < enemies.length; j++){
+            let dist = enemies[j].x - defenders[i].x   ;
+            defenders.shooting = false;
+            if(dist < 800){
+                defenders.shooting = true;
+                break; 
+            }
+        }
+    }
 }
 
 const card1 = {
@@ -335,7 +360,7 @@ function chooseDefender() {
         can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
-            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 30, 300, defenderTypes[1] ));
+            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 30, 300, defenderTypes[0] ));
 
             numberOfResources -= defender_cost; 
         } else {
@@ -348,7 +373,7 @@ function chooseDefender() {
         can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
-            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 30, 300, defenderTypes[1] ));
+            defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 0, 300, defenderTypes[1] ));
     
             
             numberOfResources -= defender_cost; 
@@ -488,6 +513,7 @@ function handleEnemies(){
             enemyPositions.splice(findThisIndex, 1);
             enemies.splice(i, 1);
             i--;
+            stopFiring(defenders, enemies);
 
         }
         for (let j = 0; j < enemies.length; j++){
@@ -502,7 +528,7 @@ function handleEnemies(){
     }
     if (frame % enemiesInterval === 0 && score < winningScore){
         let verticalPosition = 4 * cellSize + cellGap;
-        if(Math.random()*100 < 90){
+        if(Math.random()*100 > 90){
          
             enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 30, 300, enemyTypes[2]));
         }
@@ -562,8 +588,9 @@ function animate(){
     ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
     handleGameGrid();
     handleDefenders();
-    chooseDefender();
+    
     handleEnemies();
+    chooseDefender();
     handleGameStatus();
     handleFloatingMessages();
     frame++;
