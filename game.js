@@ -78,8 +78,10 @@ canvas.addEventListener('mouseleave', function(){
 });
 
 
+
 //    GAME BOARD   
 
+// blue control bar 
 const controlsBar = {
     width: canvas.width,
     height: cellSize,
@@ -151,6 +153,11 @@ function handleProjectiles() {
         }
     }
 }
+
+// life bar
+
+
+
 // DENFENDER
 
 // création des différents types d
@@ -161,6 +168,7 @@ defenderTypes.push(defender1);
 const defender2 = new Image();
 defender2.src = './assets/personnages/user_2/Character/Run.png';
 defenderTypes.push(defender2);
+
 
 class Defender {
     constructor(verticalPosition, movement, damage, health, defenserType){
@@ -278,6 +286,7 @@ function handleDefenders(){
 
             } else if (enemies[j] && enemies[j].health <= 0) {
                 defenders[i].movement = Math.random() * 2.4 + 2.9;
+                this.shooting = false;
 
             }
   
@@ -308,6 +317,7 @@ const card2 = {
 
 let can_click = true;
 
+// avoid multi click (one click = when you release)
 window.addEventListener('mouseup', ()=>{
     can_click = true;
 });
@@ -371,6 +381,7 @@ function chooseDefender() {
 
 }
 
+// Error message for rsources
 const floatingMessages = [];
 class floatingMessage { 
     constructor(value, x, y, size, color){
@@ -507,6 +518,8 @@ function handleEnemies(){
     }
 
 }
+//PAUSE
+
 
 
 // utilities
@@ -528,6 +541,10 @@ function handleGameStatus(){
         ctx.fillStyle = 'black';
         ctx.font = '90px Orbitron';
         ctx.fillText('GAME OVER', 135, 330);
+        setTimeout(function(){
+            window.location.reload(1);
+         }, 3000);
+    
     }
     if (score >= winningScore && enemies.length === 0){
         ctx.fillStyle = 'black';
@@ -544,7 +561,6 @@ function animate(){
     ctx.fillStyle = 'rgba(255, 115, 0, 0.2)';
     ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
     handleGameGrid();
-    
     handleDefenders();
     chooseDefender();
     handleEnemies();
