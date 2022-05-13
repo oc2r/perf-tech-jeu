@@ -10,9 +10,9 @@ Pour y jouer, il faut avoir nos dossiers en local et ouvrir le fichier index.php
 https://github.com/oc2r/perf-tech-jeu/blob/main/contributing.md
 
 # Précisions : 
-- Durée du projet : 5 jours
+- Durée du projet : 7 jours
 - Mode de travail : en présentiel et en groupe
-- Nombre de personnes sur le projet : 5
+- Nombre de personnes sur le projet : 6
 - Contributeurs : ARNAULD Lucie, CLAVEL Thomas, DERUNES Océane, FEUILLERAT Laurie, JOLIVET Mendrika et PISPISA Maxime
 - Supervision : FAKHOURI Corto Dufour
 
