@@ -19,6 +19,7 @@ let enemiesInterval = 300;
 let defendersInterval = 200;
 let frame = 0;
 let gameOver = false;
+var pause = false;
 let score = 0;
 const winningScore = 50;
 let chosenDefender = 1;
@@ -75,6 +76,13 @@ container.addEventListener('mousemove', function(e){
 canvas.addEventListener('mouseleave', function(){
     mouse.y = undefined;
     mouse.y = undefined;
+});
+
+//pour que les elements en haut scroll en meme temps que le scroll 
+const scrollDemo = document.querySelector("#container");
+let positionX = 0;
+scrollDemo.addEventListener("scroll", event => {
+    positionX =  scrollDemo.scrollLeft;
 });
 
 
@@ -135,6 +143,7 @@ class Projectiles {
         ctx.fill();
     }
 }
+console.log(Projectiles.power);
 
 function handleProjectiles() {
     for (let i = 0; i < projectiles.length; i++) {
@@ -261,6 +270,7 @@ function handleDefenders(){
               console.log(defenders);
               console.log(i);
               let dist = enemies[j].x - defenders[i].x   ;
+
             //   console.log("distance" + dist );
             if (dist < 800) {
                 defenders[i].shooting = true;
@@ -395,14 +405,14 @@ function chooseDefender() {
 
     ctx.lineWidth = 1;
     ctx.fillStyle = 'rgba(0,0,0,0.2)';
-    ctx.fillRect(card1.x, card1.y, card1.width, card1.height);
+    ctx.fillRect(card1.x + positionX, card1.y, card1.width, card1.height);
     ctx.strokeStyle = card1stroke;
-    ctx.strokeRect( card1.x, card1.y, card1.width, card1.height)
+    ctx.strokeRect( card1.x + positionX, card1.y, card1.width, card1.height)
     // ctx.drawImage(defender1, 0, 0, 194, 194, 0, 5, 194/2, 194/2);
-    ctx.fillRect(card2.x, card2.y, card2.width, card2.height);
+    ctx.fillRect(card2.x + positionX, card2.y, card2.width, card2.height);
     // ctx.drawImage(defender2, 0, 0, 194, 194, 0, 5, 194/2, 194/2);
     ctx.strokeStyle = card2stroke;
-    ctx.strokeRect( card2.x, card2.y, card2.width, card2.height);
+    ctx.strokeRect( card2.x + positionX, card2.y, card2.width, card2.height);
 
 }
 
@@ -534,6 +544,7 @@ function handleEnemies(){
         }
         else if(Math.random()*100 > 45){
             enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, 100, enemyTypes[1]));
+            
         }
         else if(Math.random()*100 > 0){
             enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, 100, enemyTypes[0]));
@@ -560,13 +571,13 @@ function handleGameStatus(){
     ctx.fillStyle = 'gold';
     
     ctx.font = '30px Orbitron';
-    ctx.fillText('Score: ' + score,  450, 40);
+    ctx.fillText('Score: ' + score,  450+positionX, 40);
    
-    ctx.fillText('Resources: ' + numberOfResources, 450, 80);
+    ctx.fillText('Resources: ' + numberOfResources, 450+positionX, 80);
     if (gameOver){
         ctx.fillStyle = 'black';
         ctx.font = '90px Orbitron';
-        ctx.fillText('GAME OVER', 135, 330);
+        ctx.fillText('GAME OVER', 135+positionX, 330);
         setTimeout(function(){
             window.location.reload(1);
          }, 3000);
@@ -581,8 +592,16 @@ function handleGameStatus(){
     }
 }
 
+function toggle() {
+    pause = !pause;}
+  
+
+
 function animate(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    
+    if(pause===false) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     ctx.fillStyle = 'rgba(255, 115, 0, 0.2)';
     ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
@@ -594,8 +613,9 @@ function animate(){
     handleGameStatus();
     handleFloatingMessages();
     frame++;
+    }
     if (!gameOver) requestAnimationFrame(animate);
-}
+}   
 animate();
 
 function collision(first, second){
