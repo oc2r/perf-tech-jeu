@@ -22,7 +22,7 @@ let frame = 0;
 let gameOver = false;
 var pause = false;
 let score = 0;
-const winningScore = 50;
+const winningScore = 100;
 let chosenDefender = 1;
 
 
@@ -380,8 +380,9 @@ class Defender {
             } else if (!this.shooting){
                 this.movement = Math.random() * 2.4 + 2.9;
                 // console.log("nice");
+
             }
-            console.log(this.shooting);
+
             handleProjectiles();
 
 
@@ -422,7 +423,9 @@ function handleDefenders(){
                 defenders[i].movement = 0;
                 defenders[i].health -= enemies[j].damage ;
                 enemies[j].health -= defenders[i].damage;
+            
                 // console.log("speed" + enemies[j].movement);
+
             }
             
             if (defenders[i] && defenders[i].health <= 0){
@@ -431,14 +434,14 @@ function handleDefenders(){
                 enemies[j].movement = Math.random() * 2.4 + 2.9;
 
                 // console.log(enemies[j].movement);
-
-            } else if (enemies[j] && enemies[j].health <= 0) {
+            }
+            if (enemies[j].health <= 0 ) {
+                defenders[i].movement = Math.random() * 2.4 + 2.9;
+                this.shooting = false;
                 defenders[i].shooting = false;
 
-                defenders[i].movement = Math.random() * 2.4 + 2.9;
-
             }
-
+           
         }
 
     }
@@ -474,11 +477,13 @@ function stopFiring(defenders, enemies){
             defenders.shooting = false;
             if(dist < 800){
                 defenders.shooting = true;
-                break; 
-            }
+                console.log('pooo')
+                break; }
         }
     }
 }
+
+
 
 const card1 = {
     x: 10,
@@ -516,7 +521,8 @@ function chooseDefender() {
             let verticalPosition = 4 * cellSize + cellGap;
             defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 30, 300, defenderTypes[0] ));
 
-            numberOfResources -= defender_cost; 
+            numberOfResources -= defender
+            _cost; 
         } else {
             floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
         }
@@ -574,7 +580,7 @@ class floatingMessage {
     }
     update(){
         this.y -= 0.3;
-        this.lefespan +=1;
+        this.lifeSpan +=1;
         if(this.opacity > 0.01) this.opacity -= 0.01;
     }
 
@@ -671,23 +677,27 @@ function handleEnemies(){
         }
         if (enemies[i].health <= 0){
             let gainedResources = enemies[i].maxHealth/10;
+            floatingMessages.push(new floatingMessage('+' + gainedResources, enemies[i].x, enemies[i].y,30, 'black'));
             numberOfResources += gainedResources;
+            floatingMessages.push(new floatingMessage('+' + gainedResources, 700+positionX, 80, 30, 'gold'));
             score += gainedResources;
             const findThisIndex = enemyPositions.indexOf(enemies[i].y);
             enemyPositions.splice(findThisIndex, 1);
             enemies.splice(i, 1);
             i--;
             stopFiring(defenders, enemies);
+            
 
         }
-        for (let j = 0; j < enemies.length; j++){
+
             if (enemies[i] && enemies[i].health <= 0){
                 enemies.splice(i, 1);
                 i--;
-                defenders[j].movement = Math.random() * 2.4 + 2.9;
+                // defenders[j].movement = Math.random() * 2.4 + 2.9;
+                
                 // console.log(defenders[j].movement)
             }
-        }
+        
 
     }
     if (frame % enemiesInterval === 0 && score < winningScore){
@@ -754,9 +764,9 @@ function handleGameStatus(){
     if (score >= winningScore && enemies.length === 0){
         ctx.fillStyle = 'black';
         ctx.font = '60px Orbitron';
-        ctx.fillText('LEVEL COMPLETE', 130, 300);
+        ctx.fillText('LEVEL COMPLETE', 130+positionX, 300);
         ctx.font = '30px Orbitron';
-        ctx.fillText('You win with ' + score + ' points!', 134, 340);
+        ctx.fillText('You win with ' + score + ' points!', 134+positionX, 340);
     }
 }
 
