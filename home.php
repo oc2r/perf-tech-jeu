@@ -12,6 +12,11 @@ require "./php/function.php";
     <title>Page d'accueil</title>
 </head>
 <body>
+
+<div class="container_connecté">
+    <div class="storytelling">
+        <img src="./assets/components/Story.png" alt="">
+    </div>
     <?php
 
 $user = $_SESSION['membre']["login"] ?? "";
@@ -31,4 +36,9 @@ $currentUsers =  getUrrentUser($user);
 
 <div class="deco">
     <a href="?action=deconnexion" class="btn_deco">Déconnexion</a>
+   
     </div>
+    </div>
+
+</body>
+</html>

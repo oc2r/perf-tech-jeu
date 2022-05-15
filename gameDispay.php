@@ -1,3 +1,75 @@
+<?php
+require "./php/function.php";
+?>
+
+<?php
+
+    // Get spawn delay 
+    
+    $x = $pdo->query("SELECT * FROM level WHERE id_level = 1 ");
+    while ($post = $x-> fetch(PDO::FETCH_ASSOC)){
+    // var_dump($post);
+    $spawn_delay_1 = $post['spawn_delay'];
+    $life_enemy1_1 = $post['enemy1'];
+    $life_enemy2_1 = $post['enemy2'];
+    $life_enemy3_1 = $post['enemy3'];
+
+
+    }
+    $x = $pdo->query("SELECT * FROM level WHERE id_level = 2 ");
+    while ($post = $x-> fetch(PDO::FETCH_ASSOC)){
+    // var_dump($post);
+    $spawn_delay_2 = $post['spawn_delay'];
+    $life_enemy1_2 = $post['enemy1'];
+    $life_enemy2_2 = $post['enemy2'];
+    $life_enemy3_2 = $post['enemy3'];
+    }
+
+    $x = $pdo->query("SELECT * FROM level WHERE id_level = 3 ");
+    while ($post = $x-> fetch(PDO::FETCH_ASSOC)){
+    // var_dump($post);
+    $spawn_delay_3 = $post['spawn_delay'];
+    $life_enemy1_3 = $post['enemy1'];
+    $life_enemy2_3 = $post['enemy2'];
+    $life_enemy3_3 = $post['enemy3'];
+    }
+    
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="./style/style.css">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+
+<div id="container">
+    <div class="btn_container">
+    <button class="pause_btn"onclick="toggle()">
+        <img src="./assets/components/pause.png" alt="pause"></button>
+    </div> 
+    <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_1 ?>&enemy1=<?= $life_enemy1_1 ?>&enemy2=<?= $life_enemy2_1 ?>&enemy3=<?= $life_enemy3_1 ?>">niveau1</a>
+    <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_2 ?>&enemy1=<?= $life_enemy1_2 ?>&enemy2=<?= $life_enemy2_2 ?>&enemy3=<?= $life_enemy3_2 ?>">niveau2</a>
+    <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_3 ?>&enemy1=<?= $life_enemy1_3 ?>&enemy2=<?= $life_enemy2_3 ?>&enemy3=<?= $life_enemy3_3 ?>">niveau3</a>
+
+    <canvas id="myCanvas1"></canvas>
+   
+</div>
+
+<script>
+
+
 
 const canvas = document.getElementById('myCanvas1');
  
@@ -17,13 +89,13 @@ const gameGrid = [];
 
 let start = true;
 let numberOfResources = 300;
-let enemiesInterval = 300;
+let enemiesInterval = <?= $_GET['spawn_delay'] ?>;
 let defendersInterval = 200;
 let frame = 0;
 let gameOver = false;
 var pause = false;
 let score = 0;
-const winningScore = 100;
+const winningScore = 50;
 let chosenDefender = 1;
 
 
@@ -181,7 +253,7 @@ function handleTowers() {
         for (let j = 0; j < enemies.length; j++){
  
        
-            if ( collisiontowers( enemies[j], towersdeux[0])){
+            if (collisiontowers(enemies[j], towersdeux[0])){
             
                 enemies[j].movement = 0;
                 towersdeux[0].health -= enemies[j].damage ;
@@ -205,7 +277,8 @@ function handleTowers() {
                     ctx.fillText('You win with ' + score + ' points!', 134, 340);
                     towersdeux[1].health = 0;
                     ctx.fillText(Math.floor(towersdeux[1].health), this.x , this.y);
-                    canvas.requestAnimationFrame(animate)
+                    
+                    canvas.requestAnimationFrame(animate);
                 }
                 
             }}
@@ -394,9 +467,8 @@ class Defender {
             } else if (!this.shooting){
                 this.movement = Math.random() * 2.4 + 2.9;
                 // console.log("nice");
-
             }
-
+            // console.log(this.shooting);
             handleProjectiles();
 
 
@@ -436,9 +508,7 @@ function handleDefenders(){
                 defenders[i].movement = 0;
                 defenders[i].health -= enemies[j].damage ;
                 enemies[j].health -= defenders[i].damage;
-            
                 // console.log("speed" + enemies[j].movement);
-
             }
             
             if (defenders[i] && defenders[i].health <= 0){
@@ -447,14 +517,14 @@ function handleDefenders(){
                 enemies[j].movement = Math.random() * 2.4 + 2.9;
 
                 // console.log(enemies[j].movement);
-            }
-            if (enemies[j].health <= 0 ) {
-                defenders[i].movement = Math.random() * 2.4 + 2.9;
-                this.shooting = false;
+
+            } else if (enemies[j] && enemies[j].health <= 0) {
                 defenders[i].shooting = false;
 
+                defenders[i].movement = Math.random() * 2.4 + 2.9;
+
             }
-           
+
         }
 
     }
@@ -501,13 +571,11 @@ function stopFiring(defenders, enemies){
             defenders.shooting = false;
             if(dist < 800 ){
                 defenders.shooting = true;
-                console.log('pooo')
-                break; }
+                break; 
+            }
         }
     }
 }
-
-
 
 const card1 = {
     x: 10,
@@ -520,8 +588,7 @@ const card2 = {
     x: 90,
     y: 10,
     width: 70,
-    height: 85,
-    
+    height: 85
 }
 
 let can_click = true;
@@ -546,8 +613,7 @@ function chooseDefender() {
             let verticalPosition = 4 * cellSize + cellGap;
             defenders.push(new Defender(verticalPosition,Math.random() * 2.4 + 2.9, 30, 300, defenderTypes[0] ));
 
-            numberOfResources -= defender
-            _cost; 
+            numberOfResources -= defender_cost; 
         } else {
             floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
         }
@@ -605,7 +671,7 @@ class floatingMessage {
     }
     update(){
         this.y -= 0.3;
-        this.lifeSpan +=1;
+        this.lefespan +=1;
         if(this.opacity > 0.01) this.opacity -= 0.01;
     }
 
@@ -703,37 +769,35 @@ function handleEnemies(){
         }
         if (enemies[i].health <= 0){
             let gainedResources = enemies[i].maxHealth/10;
-            floatingMessages.push(new floatingMessage('+' + gainedResources, enemies[i].x, enemies[i].y,30, 'black'));
             numberOfResources += gainedResources;
             floatingMessages.push(new floatingMessage('+' + gainedResources, 700+positionX, 80, 30, 'gold'));
+            numberOfResources += gainedResources;
             score += gainedResources;
             const findThisIndex = enemyPositions.indexOf(enemies[i].y);
             enemyPositions.splice(findThisIndex, 1);
             enemies.splice(i, 1);
             i--;
             stopFiring(defenders, enemies);
-            
 
         }
-
+        for (let j = 0; j < enemies.length; j++){
             if (enemies[i] && enemies[i].health <= 0){
                 enemies.splice(i, 1);
                 i--;
-                // defenders[j].movement = Math.random() * 2.4 + 2.9;
-                
+                defenders[j].movement = Math.random() * 2.4 + 2.9;
                 // console.log(defenders[j].movement)
             }
-        
+        }
 
     }
     if (frame % enemiesInterval === 0 && score < winningScore){
         let verticalPosition = 4 * cellSize + cellGap;
         if(Math.random()*100 > 90){
          
-            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 30, 300, enemyTypes[2]));
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 30, <?= $_GET['enemy3'] ?>, enemyTypes[2]));
         }
         else if(Math.random()*100 > 45){
-            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, 100, enemyTypes[1]));
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, <?= $_GET['enemy2'] ?>, enemyTypes[1]));
             if (this.shooting){
                 this.timer++;
                 this.movement = 0 ;
@@ -751,7 +815,7 @@ function handleEnemies(){
             }
         }
         else if(Math.random()*100 > 0){
-            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, 100, enemyTypes[0]));
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, <?= $_GET['enemy1'] ?>, enemyTypes[0]));
         }
         
         enemyPositions.push(verticalPosition);
@@ -790,9 +854,9 @@ function handleGameStatus(){
     if (score >= winningScore && enemies.length === 0){
         ctx.fillStyle = 'black';
         ctx.font = '60px Orbitron';
-        ctx.fillText('LEVEL COMPLETE', 130+positionX, 300);
+        ctx.fillText('LEVEL COMPLETE', 130, 300);
         ctx.font = '30px Orbitron';
-        ctx.fillText('You win with ' + score + ' points!', 134+positionX, 340);
+        ctx.fillText('You win with ' + score + ' points!', 134, 340);
     }
 }
 
@@ -859,3 +923,27 @@ function collisiontowers2(first, second){
 window.addEventListener('resize', function(){
     canvasPosition = canvas.getBoundingClientRect();
 })
+
+
+
+
+</script>  
+
+<?php
+
+
+$user = $_SESSION['membre']["login"] ?? "";
+$currentUsers =  getUrrentUser($user);
+$test = $_SESSION['membre']["login"];
+
+?>
+
+
+
+
+
+<script>
+
+</script>
+</body>
+</html>

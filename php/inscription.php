@@ -84,14 +84,14 @@ if($_POST) {
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	 <link rel="stylesheet" href="../style/style.css">
+	 <link rel="stylesheet" href="../style/style_login.css">
 
      <title>Inscription</title>
  </head>
- <body>
-     <h1>Insription</h1>
-
-     <h3>Veuillez rentrer les champs ci dessous</h3>
+ <body  class="page-game">
+ <div class="container_login">	
+     <h1 class="inscription_h1">Insrciption</h1>
+	 <div class="container_form_signin">
 	 <div class="inscription-form">
 	 	<form method="post">
             <label for="login">Login</label>
@@ -103,8 +103,10 @@ if($_POST) {
 			<label for="mdp">Mot de passe</label>
 			<input type="password" name="mdp" id="mdp" required>
 			<br><br>
-			<input type="submit" class="button" value="S'inscrire">
+			<input type="submit" class="signin_button" value="S'inscrire">
 		</form>
+	 </div>
+	 </div>
 	 </div>
  </body>
  </html>
