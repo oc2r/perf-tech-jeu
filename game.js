@@ -259,7 +259,7 @@ class Projectiles_enemy{
         ctx.fill();
     }
 }
-console.log(Projectiles.power);
+
 
 function handleProjectiles_enemy() {
     for (let i = 0; i < projectiles_enemy.length; i++) {
@@ -331,9 +331,6 @@ class Defender {
         this.movement = movement;
         this.shooting = false;
         this.projectiles = [];
-
-
-
         this.maxHealth = this.health;
         this.chosenDefender = chosenDefender;
         this.defenderType = defenderTypes[0];
@@ -411,8 +408,13 @@ function handleDefenders(){
             //   console.log(i);
               let dist = enemies[j].x - defenders[i].x ;
               let distTower = towersdeux[1].x - defenders[i].x;
-            //   console.log("distance" + dist );
-            if (dist < 800 || distTower < 800 ) {
+
+              console.log(distTower);
+            if (dist < 800 ) {
+                defenders[i].shooting = true;
+            } 
+            if (distTower < 800 ) {
+                console.log('poueet')
                 defenders[i].shooting = true;
             } 
             if (defenders[i].health > 0 && collision(defenders[i], enemies[j])){
