@@ -24,6 +24,15 @@ require "./php/function.php";
     $life_enemy2_2 = $post['enemy2'];
     $life_enemy3_2 = $post['enemy3'];
     }
+
+    $x = $pdo->query("SELECT * FROM level WHERE id_level = 3 ");
+    while ($post = $x-> fetch(PDO::FETCH_ASSOC)){
+    // var_dump($post);
+    $spawn_delay_3 = $post['spawn_delay'];
+    $life_enemy1_3 = $post['enemy1'];
+    $life_enemy2_3 = $post['enemy2'];
+    $life_enemy3_3 = $post['enemy3'];
+    }
     
 
 ?>
@@ -52,6 +61,8 @@ require "./php/function.php";
     </div> 
     <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_1 ?>&enemy1=<?= $life_enemy1_1 ?>&enemy2=<?= $life_enemy2_1 ?>&enemy3=<?= $life_enemy3_1 ?>">niveau1</a>
     <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_2 ?>&enemy1=<?= $life_enemy1_2 ?>&enemy2=<?= $life_enemy2_2 ?>&enemy3=<?= $life_enemy3_2 ?>">niveau2</a>
+    <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_3 ?>&enemy1=<?= $life_enemy1_3 ?>&enemy2=<?= $life_enemy2_3 ?>&enemy3=<?= $life_enemy3_3 ?>">niveau3</a>
+
     <canvas id="myCanvas1"></canvas>
    
 </div>
