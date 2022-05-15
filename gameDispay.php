@@ -59,9 +59,12 @@ require "./php/function.php";
     <button class="pause_btn"onclick="toggle()">
         <img src="./assets/components/pause.png" alt="pause"></button>
     </div> 
+    <div>
     <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_1 ?>&enemy1=<?= $life_enemy1_1 ?>&enemy2=<?= $life_enemy2_1 ?>&enemy3=<?= $life_enemy3_1 ?>">niveau1</a>
     <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_2 ?>&enemy1=<?= $life_enemy1_2 ?>&enemy2=<?= $life_enemy2_2 ?>&enemy3=<?= $life_enemy3_2 ?>">niveau2</a>
     <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_3 ?>&enemy1=<?= $life_enemy1_3 ?>&enemy2=<?= $life_enemy2_3 ?>&enemy3=<?= $life_enemy3_3 ?>">niveau3</a>
+
+    </div>
 
     <canvas id="myCanvas1"></canvas>
    

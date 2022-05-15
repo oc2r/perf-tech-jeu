@@ -5,7 +5,7 @@ require "function.php";
 //si la session membre existe alors je redirige vers l'acceuil:
 
 if(isset($_SESSION['membre'])) {
-    header('location:../gameDispay.php');
+    header('location:../home.php');
 }
 //si le form est posté:
 
@@ -32,7 +32,7 @@ if($_POST) {
             $_SESSION['membre']['login'] = $membre['login'];
 
             //je redirige vers la page d'acceuil
-            header('location:../gameDispay.php');
+            header('location:../home.php');
 
         } else {
             //le mdp est incorrect :
@@ -73,7 +73,6 @@ if($_POST) {
                     <p class="inscrire"><a href="inscription.php">S'inscrire</a> </p>
                 </div>
                 
-                <input class="clic-to-play" type="submit" value="> jouer">
             </form>
         </div>
         
