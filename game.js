@@ -15,8 +15,9 @@ const cellSize = 100;
 const cellGap = 3;
 const gameGrid = [];
 
+let start = true;
 let numberOfResources = 300;
-let enemiesInterval = 1600;
+let enemiesInterval = 300;
 let defendersInterval = 200;
 let frame = 0;
 let gameOver = false;
@@ -135,7 +136,7 @@ towers.push(tower1);
 const tower2 = new Image();
 tower2.src = './assets/background/tour-mechant.png';
 towers.push(tower2);
-console.log(towers);
+// console.log(towers);
 
 class tower {
     constructor(x, y, health, towerType) {
@@ -171,7 +172,7 @@ function handleTowers() {
  
     towersdeux[0].draw();
     towersdeux[1].draw();
-
+    
        
         // towerdefender.update();
     
@@ -184,6 +185,9 @@ function handleTowers() {
             
                 enemies[j].movement = 0;
                 towersdeux[0].health -= enemies[j].damage ;
+                if (towersdeux[0].health < 0) {
+                    gameOver = true;
+                }
     
         }}
         for (let d = 0; d < defenders.length; d++){
@@ -193,9 +197,19 @@ function handleTowers() {
     
                 defenders[d].movement = 0;
                 towersdeux[1].health -=  defenders[d].damage ;
+                if (towersdeux[1].health < 0) {
+                    ctx.fillStyle = 'black';
+                    ctx.font = '60px Orbitron';
+                    ctx.fillText('LEVEL COMPLETE', 130, 300);
+                    ctx.font = '30px Orbitron';
+                    ctx.fillText('You win with ' + score + ' points!', 134, 340);
+                    towersdeux[1].health = 0;
+                    ctx.fillText(Math.floor(towersdeux[1].health), this.x , this.y);
+                    canvas.requestAnimationFrame(animate)
+                }
                 
             }}
-        
+        // if (towerdeux.health
         
     // }
 }
@@ -283,7 +297,7 @@ function handleProjectiles() {
     for (let i = 0; i < projectiles.length; i++) {
         projectiles[i].update();
         projectiles[i].draw();
-        if ( collision(projectiles[i], towersdeux[1])) {
+        if (collision(projectiles[i], towersdeux[1])) {
             towersdeux[1].health -= projectiles[i].power;
             projectiles.splice(i,1);
         i--;
@@ -381,7 +395,7 @@ class Defender {
                 this.movement = Math.random() * 2.4 + 2.9;
                 // console.log("nice");
             }
-            console.log(this.shooting);
+            // console.log(this.shooting);
             handleProjectiles();
 
 
@@ -409,12 +423,11 @@ function handleDefenders(){
               let dist = enemies[j].x - defenders[i].x ;
               let distTower = towersdeux[1].x - defenders[i].x;
 
-              console.log(distTower);
+            //   console.log(distTower);
             if (dist < 800 ) {
                 defenders[i].shooting = true;
             } 
             if (distTower < 800 ) {
-                console.log('poueet')
                 defenders[i].shooting = true;
             } 
             if (defenders[i].health > 0 && collision(defenders[i], enemies[j])){
@@ -443,7 +456,7 @@ function handleDefenders(){
 
     }
     defenders = spliceKilledEntities(defenders);
-    // if (frame % defendersInterval === 0 && score < winningScore){
+        // if (frame % defendersInterval === 0 && score < winningScore){
     //     let verticalPosition = 4 * cellSize + cellGap;
     //     defenders.push(new Defender(verticalPosition));
     //     defenderPositions.push(verticalPosition);
@@ -462,6 +475,17 @@ function spliceKilledEntities(defenders){
     return returnedArray;
 }
 
+function spliceKilledEntitiesEnemies(enemies){
+    returnedArrayEnemie = [];
+    for (let i = 0; i < enemies.length; i++){
+        if(enemies[i].health > 0){
+            returnedArrayEnemie.push(enemies[i]);
+        }
+    }
+
+    return returnedArrayEnemie;
+}
+
 
 
 
@@ -472,7 +496,7 @@ function stopFiring(defenders, enemies){
         for (let j = 0; j < enemies.length; j++){
             let dist = enemies[j].x - defenders[i].x   ;
             defenders.shooting = false;
-            if(dist < 800){
+            if(dist < 800 ){
                 defenders.shooting = true;
                 break; 
             }
@@ -666,8 +690,9 @@ function handleEnemies(){
         enemies[i].update();
         enemies[i].draw();
 
-        if (enemies[i].x < 0){
+        if (enemies[i].x < 0 ){
             gameOver = true;
+            
         }
         if (enemies[i].health <= 0){
             let gainedResources = enemies[i].maxHealth/10;
@@ -701,7 +726,7 @@ function handleEnemies(){
             if (this.shooting){
                 this.timer++;
                 this.movement = 0 ;
-                console.log(this.timer);
+                // console.log(this.timer);
                 if(this.timer % 50 === 0) {
                     projectiles.push(new Projectiles(this.x + 70, this.y + 50));
                 }
@@ -761,21 +786,22 @@ function handleGameStatus(){
 }
 
 function toggle() {
-    pause = !pause;}
+    pause = !pause;
+
+}
   
-
-
 function animate(){
 
     
-    if(pause===false) {
+    if(!pause) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     ctx.fillStyle = 'rgba(255, 115, 0, 0.2)';
     ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
     handleTowers();
     handleGameGrid();
-   
+    
+    handleTowers();
     handleDefenders(); 
     handleEnemies();
     chooseDefender();
