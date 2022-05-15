@@ -20,7 +20,7 @@ let frame = 0;
 let gameOver = false;
 var pause = false;
 let score = 0;
-const winningScore = 50;
+const winningScore = 100;
 let chosenDefender = 1;
 let defenders = [];
 const enemies = [];
@@ -384,8 +384,8 @@ function stopFiring(defenders, enemies){
             defenders.shooting = false;
             if(dist < 800 ){
                 defenders.shooting = true;
-                break; 
-            }
+                console.log('pooo')
+                break; }
         }
     }
 }
@@ -484,7 +484,7 @@ class floatingMessage {
     }
     update(){
         this.y -= 0.3;
-        this.lefespan +=1;
+        this.lifeSpan +=1;
         if(this.opacity > 0.01) this.opacity -= 0.01;
     }
 
@@ -641,9 +641,9 @@ function handleGameStatus(){
     if (score >= winningScore && enemies.length === 0){
         ctx.fillStyle = 'black';
         ctx.font = '60px Orbitron';
-        ctx.fillText('LEVEL COMPLETE', 130, 300);
+        ctx.fillText('LEVEL COMPLETE', 130+positionX, 300);
         ctx.font = '30px Orbitron';
-        ctx.fillText('You win with ' + score + ' points!', 134, 340);
+        ctx.fillText('You win with ' + score + ' points!', 134+positionX, 340);
     }
 }
 
