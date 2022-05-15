@@ -794,7 +794,7 @@ function handleEnemies(){
         }
 
     }
-    if (frame % enemiesInterval === 0 && score < winningScore){
+    if (frame % enemiesInterval === 0 ){
         let verticalPosition = 4 * cellSize + cellGap;
         if(Math.random()*100 > 90){
          
