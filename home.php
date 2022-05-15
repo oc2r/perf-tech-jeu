@@ -8,10 +8,13 @@ require "./php/function.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/style_login.css">
     <title>Page d'accueil</title>
 </head>
 <body>
+
+<div class="container_connecté">
+  
     <?php
 
 $user = $_SESSION['membre']["login"] ?? "";
@@ -28,6 +31,17 @@ $currentUsers =  getUrrentUser($user);
        }
     ?>
 
+
 <div class="deco">
-    <a href="?action=deconnexion" class="button">Déconnexion</a>
+    <a href="?action=deconnexion" class="btn_deco">Déconnexion</a>
+   
     </div>
+    <div>
+        <form action="gameDispay.php">
+    <input class="clic-to-play" type="submit" value="jouer">
+    </form>
+    </div>
+    </div>
+
+</body>
+</html>

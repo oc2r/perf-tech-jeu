@@ -2,7 +2,7 @@
 
 require "function.php";
 
-//si la session membre existe alors je redirige vers l 'acceuil:
+//si la session membre existe alors je redirige vers l'acceuil:
 
 if(isset($_SESSION['membre'])) {
     header('location:../home.php');
@@ -44,25 +44,44 @@ if($_POST) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/style_login.css">
     <title>Connexion</title>
 </head>
-<body>
+<body  class="page-game">
+<div class="container_login">
     <?php echo $content;?>
-    <div class="connexion-form">
-        <form method="post">
-            <label for="login">login</label>
-            <input type="login" name="login" id="login" placeholder="login" required>
-            <label for="mdp">Mot de passe</label>
-            <input type="password" name="mdp" id="mdp" placeholder="Mot de passe" required>
-            <input type="submit" class="button" value="Se connecter">
-        </form>
+    <div id="container_connexion">
+        <h1>CHINO BATTLE</h1>
+        <div class="container_img">
+            <div class="container_form">
+            <form class="form_connexion" method="post">
+                <div class="identifiant">
+                    <label for="login">Identifiant</label>
+                    <input type="login" name="login" id="login" placeholder="Identifiant" required>
+                </div>
+                <div class="mdp">
+                    <label for="mdp">Mot de passe</label>
+                    <input type="password" name="mdp" id="mdp" placeholder="Mot de passe" required>
+                    <p class="mdp-oubli">Mot de passe oublie</p>
+                    <p class="inscrire"><a href="inscription.php">S'inscrire</a> </p>
+                    <p class="connexion"><a href="../home.php">Se connecter</a> </p>
+
+                </div>
+                
+            </form>
+        </div>
+        
     </div>
+    </div>
+
+    </div>
+    <script src="game.js"></script> 
 </body>
 </html>

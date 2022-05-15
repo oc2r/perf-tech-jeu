@@ -10,14 +10,20 @@
 </head>
 <body>
 
-
+<audio src="./assets/8-bit-fantasy-adventure-music.mp3" id="audio" loop="loop"></audio>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
 
 <div id="container">
+    <div class="btn_container">
+    <button class="pause_btn"onclick="toggle()">
+        <img src="./assets/components/pause.png" alt="pause"></button>
+    </div>    
     <canvas id="myCanvas1"></canvas>
+   
 </div>
+
 
 <script src="game.js"></script>  
 

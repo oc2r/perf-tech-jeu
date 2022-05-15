@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 15 mai 2022 à 23:51
+-- Généré le : dim. 15 mai 2022 à 23:14
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.1
 
@@ -61,9 +61,9 @@ CREATE TABLE `level` (
 --
 
 INSERT INTO `level` (`id_level`, `spawn_delay`, `enemy1`, `enemy2`, `enemy3`) VALUES
-(1, 600, 1000, 2000, 3000),
-(2, 300, 2000, 4000, 6000),
-(3, 100, 2000, 4000, 6000);
+(1, 600, 100, 200, 300),
+(2, 300, 200, 400, 600),
+(3, 100, 200, 400, 600);
 
 --
 -- Index pour les tables déchargées

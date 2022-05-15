@@ -1,0 +1,527 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+html{
+    height: 100%
+}
+
+body {
+	line-height: 1;
+    overflow-x: hidden;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+button{
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+}
+
+/* Remove excess padding and border in Firefox 4+ */
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+
+/*fin css reset*/
+
+.index_body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container_connecté{
+   margin-top: 50px;
+    background-image: url(../assets/background/Group\ 5.png);
+    height: 600px;
+    width: 1050px;
+    border-radius: 5px;
+    position: relative;
+    margin-inline: auto;
+}
+
+.container_connecté h2{
+    font-size: 25px;
+    margin-top: 40px;
+    margin-left: 20px;
+
+
+
+}
+
+.deco{
+    margin-top: 80px;
+    margin-left: 40px;
+}
+
+.deco a{
+    font-size: 25px;
+    text-decoration: none;}
+
+.storytelling{
+   
+    right: 10px;
+    position: absolute;
+}
+
+@font-face {
+    font-family: "04B03";
+    src: url("../assets/fonts/04B_03__.TTF") format("truetype");
+}
+
+/* fin typo*/
+.inscription-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 400px;
+    margin-inline: auto;
+}
+.inscription_h1{
+    text-align: center;
+    font-size: 44px;
+    margin-top: 50px;
+    
+}
+
+.container_form_signin{
+    background: url(../assets/components/cadre\(1\).png) no-repeat center center fixed;
+    
+
+}
+
+.inscription-form form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:flex-start;
+    gap:8px;
+}
+
+h1, p{
+    font-family: "04B03";
+}
+
+h1{
+    font-size: 90px;
+    color: white;
+}
+
+.page-play, .page-game{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+}
+
+#container-game, #container-home, #container-pause, #container-storytelling{
+    width:1000px;
+    height: 500px;
+    position: relative;
+}
+
+.page-play, #container-game{
+    background: url("assets/background/background-game.png");
+    margin: 0;
+    background-position: contain;
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+.container_login{
+    background-image: url(../assets/background/background-home.png);
+    height: 600px;
+    width: 1000px;
+    border-radius: 8px;
+}
+
+.container_homepage{
+    font-family: "04B03","VT323", monospace;
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-connexion a{
+    color: rgb(0, 0, 0);
+text-decoration: none;
+}
+
+.menu-connexion{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+margin-top: 200px;
+gap: 40px;
+font-size: 40px;
+font-weight: 400;
+}
+
+/* .container_hometext{
+    background: url(../assets/components/cadre\(1\).png) no-repeat center center fixed;
+    height: 600px;
+    width: 1000px;
+
+} */
+
+.container_home{
+    background-image: url(../assets/background/background-home.png);
+    height: 600px;
+    width: 1000px;
+    border-radius: 8px;
+
+}
+
+.container_img{
+    margin-top: 3px;
+    background: url(../assets/components/cadre\(1\).png) no-repeat center center fixed;
+    width: 450px;
+    height: 360px;
+    
+}
+.container_img img{
+    width: 200px;
+    height: 200px;
+}
+
+.signin_button{
+    margin-top: 30px;
+}
+
+
+.container_form{margin-left: 60px;}
+
+
+.home-title{
+    font-family: "04B03","VT323", monospace;
+}
+
+.play{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    padding: 2rem;
+}
+
+body{
+    background-color: #01283F;
+}
+
+.composants{
+    width: calc(100% - 100px);
+    margin: 10px; 
+    margin-inline: 50px;  
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+}
+
+.soldats-pieces{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.soldats{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 80px;
+}
+
+.soldat1, .soldat2, .soldat3, .pause{
+    height: 70px;
+    width: 70px;
+}
+
+.soldat1{
+    background: no-repeat center/80% url("assets/composants/soldat-boloss.png") ;
+    background-position: contain;
+    background-size: cover;
+}
+
+.soldat2{
+    background: no-repeat url("assets/composants/soldat-archer.png");
+    background-position: contain;
+    background-size: cover;
+}
+
+.soldat3{
+    background: no-repeat url("assets/composants/soldat-roi.png");
+    background-position: contain;
+    background-size: cover;
+}
+
+.piece-score{
+    height: 75px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    color: white;
+    background: no-repeat url(assets/composants/piece.svg);
+    background-size: 100%;
+}
+
+.piece-score p{
+    margin-left: 70px;
+    font-size: 20px;
+}
+
+.score-pause, .score-meilleurscore, .score, .meilleur-score{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.score-meilleurscore{
+    flex-direction: column;
+}
+
+.score{
+    font-size: 40px;
+}
+
+.meilleur-score{
+    font-size: 20px;
+}
+
+.pause{
+    position: relative;
+    background: no-repeat url(assets/composants/pause.png);
+    background-position: 50% 50%;
+    background-size: contain;
+}
+
+.pause img{
+    height: 70px;
+    width: 70px;
+}
+
+#container-home{
+    background: no-repeat url("assets/background/background-home.png");
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.titre-bouton{
+    position: absolute;
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+}  
+
+#container-pause{
+    background: no-repeat url("assets/background/background-home.png");
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.page-pause{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(100, 100, 100, 0.5);
+}
+
+.cadre-pause{
+    z-index: 1;
+    position: absolute;
+    right: calc(50% - 225px);
+    height: 450px;
+    width:450px;
+
+    background: no-repeat url("assets/composants/cadre_pause.png");
+    background-position: 50% 50%;
+    background-size: contain;
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    color: white;
+}
+
+.reprendre-quitter{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 30px;
+}
+
+.jeu-pause{
+    font-size: 40px;
+    padding-top: 150px;
+}
+
+#container-storytelling{
+    background: no-repeat url("assets/background/background-storytelling.png");
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.storytelling{
+    position: absolute;
+    width: 400px;
+    right: 150px;
+    top:100px;
+}
+
+/*css pour pages php*/
+
+input, label, .inscrire{
+    font-family: "04B03";
+    color: white;
+    padding: 7px;
+    border-radius: 5px;
+    border: none;
+}
+
+.mdp-oubli{
+    font-family: "04B03";
+    color: rgb(236, 236, 236);
+}
+
+input[type="submit"]{
+    font-family: "04B03";
+    color: white;
+    font-size: 28px;
+    text-transform: uppercase;
+
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+
+    background: transparent;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+}
+
+#container_connexion{
+    width:calc(1000px - 30px);
+    height: calc(500px - 30px);
+    position: relative;
+}
+
+#container_connexion{
+    background: no-repeat url("assets/background/background-connexion.png");
+    background-position: 50% 50%;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+}
+
+.form_connexion{
+    height: 210px;
+    width: 200px;
+    padding-block: 40px;
+    padding-inline: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: no-repeat url("assets/composants/cadre_connexion.png");
+    background-position: 50% 50%;
+    background-size: contain;
+}
+
+.identifiant, .mdp{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mdp-oubli{
+    font-size: 14px;
+
+}
+
+.identifiant input, .mdp input{
+    padding: 10px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.inscrire, .mdp-oubli{
+    text-decoration: underline;
+}
+
