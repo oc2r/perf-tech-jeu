@@ -8,15 +8,13 @@ require "./php/function.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/style_login.css">
     <title>Page d'accueil</title>
 </head>
 <body>
 
 <div class="container_connecté">
-    <div class="storytelling">
-        <img src="./assets/components/Story.png" alt="">
-    </div>
+  
     <?php
 
 $user = $_SESSION['membre']["login"] ?? "";

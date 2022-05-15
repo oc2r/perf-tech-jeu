@@ -5,44 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/style_login.css">
     
     <title>Document</title>
 </head>
-<body>
+<body class="index_body">
 
-<div class="container_login">
-<div class="container_login_input">
+<div class="container_homepage">
+    <div class="container_home">
 
-<?php
-require "./php/function.php";
-
-$user = $_SESSION['membre']["login"] ?? "";
-$currentUsers =  getUrrentUser($user);
+        <div class="container_hometext">
 
 
-    // var_dump($currentUser);
-        if(isset($_SESSION['membre'])) {
-        header('location:index.php');
 
-    ?>
-    	<!-- <a href="?action=deconnexion">Déconnexion</a>
-		<br> -->
-  
-    
-    <?php
-        } else {
-    ?>
-    <div class="menu-connexion">
+        <?php
+        require "./php/function.php";
 
-    <a href="./php/inscription.php" class="button">inscription</a>
+        $user = $_SESSION['membre']["login"] ?? "";
+        $currentUsers =  getUrrentUser($user);
 
-    <a href="./php/connexion.php" class="button">connexion</a>
+
+        
+                if(isset($_SESSION['membre'])) {
+                header('location:index.php');
+
+            ?>
+         
+            <?php
+                } else {
+            ?>
+            <div class="menu-connexion">
+
+            <a href="./php/inscription.php" class="button">Inscription</a>
+
+            <a href="./php/connexion.php" class="button">Connexion</a>
+            </div>
+            <?php
+            }
+            ?>
+        </div>   
     </div>
-    <?php
-       }
-    ?>
-</div>
 </div>   
     <script src="character_template.js"></script>
 </body>
