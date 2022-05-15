@@ -227,8 +227,6 @@ update() {
 }
 
 draw() {
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.fillText(Math.floor(this.health), this.x , this.y);
     ctx.fillStyle = 'rgba(0,0,0,1)';
     ctx.fillStyle = 'black';
@@ -313,51 +311,54 @@ class Projectiles {
         this.x += this.speed;
     }
     draw() {
-        ctx.fillStyle = "black";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.width, 0, Math.PI * 2);
-        ctx.fill();
+        const arrowType = [];
+        const arrow = new Image();
+        arrow.src = './assets/personnages/user_2/Arrow/Static.png';
+        arrowType.push(arrow);
+        ctx.drawImage(arrowType[0], this.x, this.y, 50, 10);
     }
 }
 
-class Projectiles_enemy{
-    constructor(x,y) {
-        this.x = x;
-        this.y = y;
-        this.width = 10;
-        this.height = 10;
-        this.power = 20;
-        this.speed = 10;
-    }
-    update() {
-        this.x += this.speed;
-    }
-    draw() {
-        ctx.fillStyle = "black";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.width, 0, Math.PI * 2);
-        ctx.fill();
-    }
+//personnages
+
+let chooseDefender1 = {
+    x: 10,
+    y: 10,
+    width: 70,
+    height: 85
+}
+const youChooseDefender1 = new Image();
+youChooseDefender1.src = './assets/components/soldat-boloss.png';
+
+function putchooseDefender1() {
+    ctx.drawImage(youChooseDefender1, chooseDefender1.x, chooseDefender1.y, chooseDefender1.width, chooseDefender1.height);
+}
+let chooseDefender2 = {
+    x: 90,
+    y: 10,
+    width: 70,
+    height: 85
+}
+const youChooseDefender2 = new Image();
+youChooseDefender2.src = './assets/components/soldat-archer.png';
+
+function putchooseDefender2() {
+    ctx.drawImage(youChooseDefender2, chooseDefender2.x, chooseDefender2.y, chooseDefender2.width, chooseDefender2.height);
+}
+let chooseDefender3 = {
+    x: 170,
+    y: 10,
+    width: 70,
+    height: 85
+}
+const youChooseDefender3 = new Image();
+youChooseDefender3.src = './assets/components/soldat-roi.png';
+
+function putchooseDefender3() {
+    ctx.drawImage(youChooseDefender3, chooseDefender3.x, chooseDefender3.y, chooseDefender3.width, chooseDefender3.height);
 }
 
 
-function handleProjectiles_enemy() {
-    for (let i = 0; i < projectiles_enemy.length; i++) {
-        projectiles_enemy[i].update();
-        projectiles_enemy[i].draw();
-        for (let j = 0; j < enemies.length; j++) {
-            if (enemies[j] && projectiles_enemy[i] && collision(projectiles_enemy[i], enemies[j])) {
-                enemies[j].health -= projectiles_enemy[i].power;
-                projectiles_enemy.splice(i,1);
-            i--;
-            }
-        }
-        if (projectiles_enemy[i] && projectiles_enemy[i].x > canvas.width - cellSize) {
-            projectiles_enemy.splice(i,1);
-            i--;
-        }
-    }
-}
 
 function handleProjectiles() {
     for (let i = 0; i < projectiles.length; i++) {
@@ -383,13 +384,9 @@ function handleProjectiles() {
     }
 }
 
-// life bar
 
+// DEFENDER
 
-
-// DENFENDER
-
-// création des différents types d
 const defenderTypes = [];
 const defender1 = new Image();
 defender1.src = './assets/personnages/user_1/Run.png';
@@ -397,6 +394,9 @@ defenderTypes.push(defender1);
 const defender2 = new Image();
 defender2.src = './assets/personnages/user_2/Character/Run.png';
 defenderTypes.push(defender2);
+const defender3 = new Image();
+defender3.src = './assets/personnages/user_3/Run.png';
+defenderTypes.push(defender3);
 
 
 class Defender {
@@ -422,6 +422,8 @@ class Defender {
         this.spriteHeightUser1 = 150;
         this.spriteWidthUser2 = 100;
         this.spriteHeightUser2 = 100;
+        this.spriteWidthUser3 = 160;
+        this.spriteHeightUser3 = 111;
         this.timer = 75;
     }
 
@@ -435,17 +437,14 @@ class Defender {
     }
      draw(){
         if (this.chosenDefender === 1) {
-            ctx.fillStyle = 'yellow';
-            ctx.fillRect(this.x, this.y, this.width, this.height);
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-            ctx.drawImage(this.defenderType, this.frameX * this.spriteWidthUser1, 0, this.spriteWidthUser1, this.spriteHeightUser1, this.x -100 , this.y - 100, 300, 300);
+            ctx.drawImage(defenderType[0], this.frameX * this.spriteWidthUser1, 0, this.spriteWidthUser1, this.spriteHeightUser1, this.x -100 , this.y - 100, 300, 300);
 
         }
         if (this.chosenDefender === 2) {
-            ctx.fillStyle = 'pink';
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+            // console.log("caca");
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
@@ -463,10 +462,18 @@ class Defender {
             }
             // console.log(this.shooting);
             handleProjectiles();
-
-
         }
-    }
+            if (this.chosenDefender === 3) {
+            
+            ctx.fillStyle = 'gold';
+            ctx.font = '30px Orbitron';
+            ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
+            ctx.drawImage(defenderTypes[2], this.frameX * this.spriteWidthUser3, 0, this.spriteWidthUser3, this.spriteHeightUser3, this.x - 80, this.y - 80, 274, 190);
+        
+        }
+        
+    } 
+    
 }
 
 function handleDefenders(){
@@ -522,12 +529,7 @@ function handleDefenders(){
 
     }
     defenders = spliceKilledEntities(defenders);
-        // if (frame % defendersInterval === 0 && score < winningScore){
-    //     let verticalPosition = 4 * cellSize + cellGap;
-    //     defenders.push(new Defender(verticalPosition));
-    //     defenderPositions.push(verticalPosition);
-        // if (defendersInterval > 120) defendersInterval += 50;
-    //}
+
 }
 
 function spliceKilledEntities(defenders){
@@ -584,6 +586,13 @@ const card2 = {
     height: 85
 }
 
+const card3 = {
+    x: 170,
+    y: 10,
+    width: 70,
+    height: 85
+}
+
 let can_click = true;
 
 // avoid multi click (one click = when you release)
@@ -624,6 +633,21 @@ function chooseDefender() {
         } else {
             floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
         }
+        
+
+    }
+    if (collision(mouse, card3) && mouse.clicked && can_click == true) {
+        chosenDefender = 3;
+        can_click = false;
+        if (numberOfResources >= defender_cost ) {
+            let verticalPosition = 4 * cellSize + cellGap;
+            defenders.push(new Defender(verticalPosition, Math.random() * 2.4 + 2.9, 30, 500, defenderTypes[2]));
+            // console.log(defenders);
+
+            numberOfResources -= defender_cost; 
+        } else {
+            floatingMessages.push(new floatingMessage('pas assez de ressources', mouse.x , mouse.y, 15, 'blue'));
+        }
     }
 
     if (chosenDefender === 1) {
@@ -631,6 +655,10 @@ function chooseDefender() {
         card2stroke = 'black';
     } else if (chosenDefender === 2) {
         card1stroke = 'black';
+        card2stroke = 'gold';
+    } else if (chosenDefender === 3) {
+        card1stroke = 'black';
+        card2stroke = 'black';
         card2stroke = 'gold';
     } else {
         card1stroke = 'black';
@@ -647,6 +675,11 @@ function chooseDefender() {
     // ctx.drawImage(defender2, 0, 0, 194, 194, 0, 5, 194/2, 194/2);
     ctx.strokeStyle = card2stroke;
     ctx.strokeRect( card2.x + positionX, card2.y, card2.width, card2.height);
+    let card3stroke = 'black';
+    ctx.fillRect(card3.x, card3.y, card3.width, card3.height);
+    // ctx.drawImage(defender2, 0, 0, 194, 194, 0, 5, 194/2, 194/2);
+    ctx.strokeStyle = card3stroke;
+    ctx.strokeRect( card3.x, card3.y, card3.width, card3.height);
 
 }
 
@@ -664,7 +697,7 @@ class floatingMessage {
     }
     update(){
         this.y -= 0.3;
-        this.lefespan +=1;
+        this.lifespan +=1;
         if(this.opacity > 0.01) this.opacity -= 0.01;
     }
 
@@ -739,8 +772,6 @@ class Enemy {
     }
 
     draw(){
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = 'black';
         ctx.font = '30px Orbitron';
         ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
@@ -803,10 +834,6 @@ function handleEnemies(){
                 this.movement = Math.random() * 2.4 + 2.9;
                 // console.log("nice");
             }
-            handleProjectiles_enemy();
-            for (enemies_shoot = 0; enemies_shoot < enemies.length; enemies_shoot++) {
-                
-            }
         }
         else if(Math.random()*100 > 0){
             enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, <?= $_GET['enemy1'] ?>, enemyTypes[0]));
@@ -848,14 +875,7 @@ function handleGameStatus(){
         ctx.fillText('You win with ' + score + ' points!', 134 +positionX, 340);
         canvas.requestAnimationFrame(animate);
     }
-    if (score >= winningScore && enemies.length === 0){
-        ctx.fillStyle = 'black';
-        ctx.font = '60px Orbitron';
-        ctx.fillText('LEVEL COMPLETE', 130 + positionX, 300);
-        ctx.font = '30px Orbitron';
-        ctx.fillText('You win with ' + score + ' points!', 134 +positionX, 340);
-        canvas.requestAnimationFrame(animate);
-    }
+
 }
 
 function toggle() {
@@ -880,6 +900,9 @@ function animate(){
     chooseDefender();
     handleGameStatus();
     handleFloatingMessages();
+    putchooseDefender1();
+    putchooseDefender2();
+    putchooseDefender3();
     frame++;
     }
     if (!gameOver) requestAnimationFrame(animate); 
