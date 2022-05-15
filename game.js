@@ -1,10 +1,11 @@
-
+// audio play
+window.onload=function(){
+    document.getElementById("audio").play();
+}
 
 const canvas = document.getElementById('myCanvas1');
 const container = document.getElementById('container');
 const ctx = canvas.getContext('2d');
-
-
 
 // grid variables
 const cellSize = 100;
