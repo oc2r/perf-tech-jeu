@@ -16,7 +16,7 @@ const cellGap = 3;
 const gameGrid = [];
 
 let numberOfResources = 300;
-let enemiesInterval = 200;
+let enemiesInterval = 1600;
 let defendersInterval = 200;
 let frame = 0;
 let gameOver = false;
@@ -124,6 +124,100 @@ function handleGameGrid(){
         gameGrid[i].draw();
     }
 }
+
+                       
+// Towers
+const towers = [];
+const tower1 = new Image();
+tower1.src = './assets/background/tour-gentil2.png';
+towers.push(tower1);
+
+const tower2 = new Image();
+tower2.src = './assets/background/tour-mechant.png';
+towers.push(tower2);
+console.log(towers);
+
+class tower {
+    constructor(x, y, health, towerType) {
+    this.x = x ,
+    this.y = y,
+    this.width = 248,
+    this.height = 393,
+    this.health = health
+    this.towerType = towerType
+} 
+update() {
+    this.health = 3000;
+}
+
+draw() {
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.fillText(Math.floor(this.health), this.x , this.y);
+    ctx.fillStyle = 'rgba(0,0,0,1)';
+    ctx.fillStyle = 'black';
+    ctx.font = '30px Orbitron';
+    ctx.drawImage(this.towerType,this.x ,this.y ,this.width ,this.height )
+    }
+}
+
+const towersdeux = [];
+
+function handleTowers() {
+    // towers.push(new tower(0 ,600 , 2000, towers[0] ));
+    towersdeux.push(new tower(0 ,180 , 2000, towers[0] ));
+    // towerdefender.draw();
+    towersdeux.push(new tower(2252 ,180 , 2000, towers[1] ));
+ 
+    towersdeux[0].draw();
+    towersdeux[1].draw();
+
+       
+        // towerdefender.update();
+    
+        // towerenemy.draw();
+    // for (let i = 0; i < towersdeux.length; i++){
+        for (let j = 0; j < enemies.length; j++){
+ 
+       
+            if ( collisiontowers( enemies[j], towersdeux[0])){
+            
+                enemies[j].movement = 0;
+                towersdeux[0].health -= enemies[j].damage ;
+    
+        }}
+        for (let d = 0; d < defenders.length; d++){
+    
+   
+            if (collisiontowers2(  defenders[d], towersdeux[1])){
+    
+                defenders[d].movement = 0;
+                towersdeux[1].health -=  defenders[d].damage ;
+                
+            }}
+        
+        
+    // }
+}
+
+
+// let tower_enemy = {
+//     x: 200 ,
+//     y: 600,
+//     width: 400,
+//     height: 600,
+// }
+
+// const tower2 = new Image();
+// tower2.src = './assets/background/tour-mechant.png';
+
+// function towers2() {
+//     ctx.fillStyle = 'rgba(155,100,0,1)';
+//     ctx.fillRect(tower_enemy.x, tower_enemy.y, tower_enemy.width, tower_enemy.height);
+//     ctx.drawImage(tower2,2252 ,180 ,248 ,393 )
+ 
+// }
+
 //Projectiles
 
 class Projectiles {
@@ -189,12 +283,18 @@ function handleProjectiles() {
     for (let i = 0; i < projectiles.length; i++) {
         projectiles[i].update();
         projectiles[i].draw();
+        if ( collision(projectiles[i], towersdeux[1])) {
+            towersdeux[1].health -= projectiles[i].power;
+            projectiles.splice(i,1);
+        i--;
+        }
         for (let j = 0; j < enemies.length; j++) {
             if (enemies[j] && projectiles[i] && collision(projectiles[i], enemies[j])) {
                 enemies[j].health -= projectiles[i].power;
                 projectiles.splice(i,1);
             i--;
             }
+           
         }
         if (projectiles[i] && projectiles[i].x > canvas.width - cellSize) {
             projectiles.splice(i,1);
@@ -272,11 +372,11 @@ class Defender {
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-            ctx.drawImage(defenderTypes[1], this.frameX * this.spriteWidthUser2, 0, this.spriteWidthUser2, this.spriteHeightUser2, this.x, this.y, this.width, this.height);
+            ctx.drawImage(defenderTypes[1], this.frameX * this.spriteWidthUser2, 0, this.spriteWidthUser2, this.spriteHeightUser2, this.x -60, this.y - 80, 240, 240);
             if (this.shooting){
                 this.timer++;
                 this.movement = 0 ;
-                // console.log(this.timer);
+                // console.log(this.shooting);
                 if(this.timer % 100 === 0) {
                     projectiles.push(new Projectiles(this.x + 70, this.y + 50));
                 }
@@ -309,10 +409,10 @@ function handleDefenders(){
           for (let j = 0; j < enemies.length; j++){
             //   console.log(defenders);
             //   console.log(i);
-              let dist = enemies[j].x - defenders[i].x   ;
-
+              let dist = enemies[j].x - defenders[i].x ;
+              let distTower = towersdeux[1].x - defenders[i].x;
             //   console.log("distance" + dist );
-            if (dist < 800) {
+            if (dist < 800 || distTower < 800 ) {
                 defenders[i].shooting = true;
             } 
             if (defenders[i].health > 0 && collision(defenders[i], enemies[j])){
@@ -322,6 +422,7 @@ function handleDefenders(){
                 enemies[j].health -= defenders[i].damage;
                 // console.log("speed" + enemies[j].movement);
             }
+            
             if (defenders[i] && defenders[i].health <= 0){
                 // defenders.splice(i, 1);
                 // i--;
@@ -369,11 +470,10 @@ function stopFiring(defenders, enemies){
         for (let j = 0; j < enemies.length; j++){
             let dist = enemies[j].x - defenders[i].x   ;
             defenders.shooting = false;
-            console.log(shooting);
             if(dist < 800){
                 defenders.shooting = true;
                 break; 
-            } 
+            }
         }
     }
 }
@@ -408,7 +508,7 @@ function chooseDefender() {
     if (collision(mouse, card1) && mouse.clicked && can_click == true) {
         
         chosenDefender = 1;
-        // console.log(chosenDefender);
+       
         can_click = false;
         if (numberOfResources >= defender_cost ) {
             let verticalPosition = 4 * cellSize + cellGap;
@@ -514,7 +614,7 @@ enemyTypes.push(enemy_strong);
 
 class Enemy {
     constructor(verticalPosition, movement, damage, health, enemyType){
-        this.x = canvas.width;
+        this.x = canvas.width- 300;
         // this.x = 0;
         this.y = verticalPosition;
         this.width =  cellSize - cellGap * 2;
@@ -575,7 +675,7 @@ function handleEnemies(){
             enemyPositions.splice(findThisIndex, 1);
             enemies.splice(i, 1);
             i--;
-            // stopFiring(defenders, enemies);
+            stopFiring(defenders, enemies);
 
         }
         for (let j = 0; j < enemies.length; j++){
@@ -671,9 +771,10 @@ function animate(){
     
     ctx.fillStyle = 'rgba(255, 115, 0, 0.2)';
     ctx.fillRect(0,0,controlsBar.width, controlsBar.height);
+    handleTowers();
     handleGameGrid();
-    handleDefenders();
-    
+   
+    handleDefenders(); 
     handleEnemies();
     chooseDefender();
     handleGameStatus();
@@ -686,6 +787,26 @@ animate();
 
 function collision(first, second){
     if (    !(  first.x > second.x + second.width ||
+                first.x + first.width < second.x ||
+                first.y > second.y + second.height ||
+                first.y + first.height < second.y)
+    ) {
+        return true;
+    };
+};
+
+function collisiontowers(first, second){
+    if (    !(  first.x > second.x + second.width-100 ||
+                first.x + first.width < second.x ||
+                first.y > second.y + second.height ||
+                first.y + first.height < second.y)
+    ) {
+        return true;
+    };
+};
+
+function collisiontowers2(first, second){
+    if (    !(  first.x > second.x + second.width +100  ||
                 first.x + first.width < second.x ||
                 first.y > second.y + second.height ||
                 first.y + first.height < second.y)
