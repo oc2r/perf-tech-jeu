@@ -272,17 +272,17 @@ function handleTowers() {
     
                 defenders[d].movement = 0;
                 towersdeux[1].health -=  defenders[d].damage ;
-                if (towersdeux[1].health < 0) {
-                    ctx.fillStyle = 'black';
-                    ctx.font = '60px Orbitron';
-                    ctx.fillText('LEVEL COMPLETE', 130, 300);
-                    ctx.font = '30px Orbitron';
-                    ctx.fillText('You win with ' + score + ' points!', 134, 340);
-                    towersdeux[1].health = 0;
-                    ctx.fillText(Math.floor(towersdeux[1].health), this.x , this.y);
+                // if (towersdeux[1].health < 0) {
+                //     ctx.fillStyle = 'black';
+                //     ctx.font = '60px Orbitron';
+                //     ctx.fillText('LEVEL COMPLETE', 130, 300);
+                //     ctx.font = '30px Orbitron';
+                //     ctx.fillText('You win with ' + score + ' points!', 134, 340);
+                //     towersdeux[1].health = 0;
+                //     ctx.fillText(Math.floor(towersdeux[1].health), this.x , this.y);
                     
-                    canvas.requestAnimationFrame(animate);
-                }
+                //     canvas.requestAnimationFrame(animate);
+                // }
                 
             }}
         // if (towerdeux.health
@@ -772,6 +772,7 @@ function handleEnemies(){
         }
         if (enemies[i].health <= 0){
             let gainedResources = enemies[i].maxHealth/10;
+            floatingMessages.push(new floatingMessage('+' + gainedResources, enemies[i].x, enemies[i].y,30, 'black'));
             numberOfResources += gainedResources;
             floatingMessages.push(new floatingMessage('+' + gainedResources, 700+positionX, 80, 30, 'gold'));
             numberOfResources += gainedResources;
@@ -854,12 +855,13 @@ function handleGameStatus(){
          }, 3000);
     
     }
-    if (score >= winningScore && enemies.length === 0){
+    if (towersdeux[1].health <= 0 ){
         ctx.fillStyle = 'black';
         ctx.font = '60px Orbitron';
-        ctx.fillText('LEVEL COMPLETE', 130, 300);
+        ctx.fillText('LEVEL COMPLETE', 130 + positionX, 300);
         ctx.font = '30px Orbitron';
-        ctx.fillText('You win with ' + score + ' points!', 134, 340);
+        ctx.fillText('You win with ' + score + ' points!', 134 +positionX, 340);
+        canvas.requestAnimationFrame(animate);
     }
 }
 
@@ -887,7 +889,7 @@ function animate(){
     handleFloatingMessages();
     frame++;
     }
-    if (!gameOver) requestAnimationFrame(animate);
+    if (!gameOver) requestAnimationFrame(animate); 
 }   
 animate();
 
