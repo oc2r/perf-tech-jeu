@@ -1,16 +1,5 @@
 
 
-.container_connecté{
-    background-image: url(../assets/background/background-storytelling.png);
-    height: 600px;
-    width: 1000px;
-    position: relative;
-}
-.storytelling{
-   
-  right: 10px;
-    position: absolute;
-}
 
 body {
     background: rgb(3, 1, 84);
