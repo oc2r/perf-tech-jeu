@@ -73,7 +73,6 @@ if($_POST) {
                     <p class="inscrire"><a href="inscription.php">S'inscrire</a> </p>
                 </div>
                 
-                <input class="clic-to-play" type="submit" value="> jouer">
             </form>
         </div>
         
