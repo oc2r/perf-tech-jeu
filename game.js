@@ -491,7 +491,8 @@ const card2 = {
     x: 90,
     y: 10,
     width: 70,
-    height: 85
+    height: 85,
+    
 }
 
 let can_click = true;
