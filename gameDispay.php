@@ -950,14 +950,5 @@ window.addEventListener('resize', function(){
 
 </script>  
 
-
-
-
-
-
-
-<script>
-
-</script>
 </body>
 </html>
