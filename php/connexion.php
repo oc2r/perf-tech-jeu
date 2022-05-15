@@ -71,6 +71,8 @@ if($_POST) {
                     <input type="password" name="mdp" id="mdp" placeholder="Mot de passe" required>
                     <p class="mdp-oubli">Mot de passe oublie</p>
                     <p class="inscrire"><a href="inscription.php">S'inscrire</a> </p>
+                    <p class="connexion"><a href="../home.php">Se connecter</a> </p>
+
                 </div>
                 
             </form>
