@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 10 mai 2022 à 16:12
+-- Généré le : dim. 15 mai 2022 à 23:51
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.1
 
@@ -42,6 +42,29 @@ CREATE TABLE `joueur` (
 INSERT INTO `joueur` (`id_player`, `login`, `pseudo`, `mdp`, `score`) VALUES
 (1, 'totolescroc', 'toto', '$2y$10$qlo9mDlF8.M5dotubkeMfuTLfelIorj1GBJqiRUNyGniEfG2c8Vzq', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `level`
+--
+
+CREATE TABLE `level` (
+  `id_level` int(11) NOT NULL,
+  `spawn_delay` int(11) NOT NULL,
+  `enemy1` int(100) NOT NULL,
+  `enemy2` int(100) NOT NULL,
+  `enemy3` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `level`
+--
+
+INSERT INTO `level` (`id_level`, `spawn_delay`, `enemy1`, `enemy2`, `enemy3`) VALUES
+(1, 600, 1000, 2000, 3000),
+(2, 300, 2000, 4000, 6000),
+(3, 100, 2000, 4000, 6000);
+
 --
 -- Index pour les tables déchargées
 --
@@ -53,6 +76,12 @@ ALTER TABLE `joueur`
   ADD PRIMARY KEY (`id_player`);
 
 --
+-- Index pour la table `level`
+--
+ALTER TABLE `level`
+  ADD PRIMARY KEY (`id_level`);
+
+--
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
@@ -61,6 +90,12 @@ ALTER TABLE `joueur`
 --
 ALTER TABLE `joueur`
   MODIFY `id_player` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `level`
+--
+ALTER TABLE `level`
+  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
