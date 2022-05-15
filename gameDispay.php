@@ -934,14 +934,7 @@ window.addEventListener('resize', function(){
 
 </script>  
 
-<?php
 
-
-$user = $_SESSION['membre']["login"] ?? "";
-$currentUsers =  getUrrentUser($user);
-$test = $_SESSION['membre']["login"];
-
-?>
 
 
 
