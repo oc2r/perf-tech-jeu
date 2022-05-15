@@ -38,6 +38,11 @@ $currentUsers =  getUrrentUser($user);
     <a href="?action=deconnexion" class="btn_deco">Déconnexion</a>
    
     </div>
+    <div>
+        <form action="gameDispay.php">
+    <input class="clic-to-play" type="submit" value="jouer">
+    </form>
+    </div>
     </div>
 
 </body>
