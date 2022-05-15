@@ -3,17 +3,30 @@ require "./php/function.php";
 ?>
 
 <?php
-    $x = $pdo->query("SELECT spawn_delay FROM level WHERE id_level = 2 ");
+
+    // Get spawn delay 
+    
+    $x = $pdo->query("SELECT * FROM level WHERE id_level = 1 ");
     while ($post = $x-> fetch(PDO::FETCH_ASSOC)){
-    var_dump($post);
-    $a = implode($post);
+    // var_dump($post);
+    $spawn_delay_1 = $post['spawn_delay'];
+    $life_enemy1_1 = $post['enemy1'];
+    $life_enemy2_1 = $post['enemy2'];
+    $life_enemy3_1 = $post['enemy3'];
+
+
     }
-    echo $a;
+    $x = $pdo->query("SELECT * FROM level WHERE id_level = 2 ");
+    while ($post = $x-> fetch(PDO::FETCH_ASSOC)){
+    // var_dump($post);
+    $spawn_delay_2 = $post['spawn_delay'];
+    $life_enemy1_2 = $post['enemy1'];
+    $life_enemy2_2 = $post['enemy2'];
+    $life_enemy3_2 = $post['enemy3'];
+    }
+    
 
 ?>
-<script>
-    var a = "<?php echo"$a"?>";
-</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,11 +46,15 @@ require "./php/function.php";
 
 
 <div id="container">
+    <div class="btn_container">
+    <button class="pause_btn"onclick="toggle()">
+        <img src="./assets/components/pause.png" alt="pause"></button>
+    </div> 
+    <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_1 ?>&enemy1=<?= $life_enemy1_1 ?>&enemy2=<?= $life_enemy2_1 ?>&enemy3=<?= $life_enemy3_1 ?>">niveau1</a>
+    <a href="gameDispay.php?spawn_delay=<?= $spawn_delay_2 ?>&enemy1=<?= $life_enemy1_2 ?>&enemy2=<?= $life_enemy2_2 ?>&enemy3=<?= $life_enemy3_2 ?>">niveau2</a>
     <canvas id="myCanvas1"></canvas>
    
 </div>
-<button onclick="toggle()">
-    pause</button>
 
 <script>
 
@@ -61,7 +78,7 @@ const gameGrid = [];
 
 let start = true;
 let numberOfResources = 300;
-let enemiesInterval = 300;
+let enemiesInterval = <?= $_GET['spawn_delay'] ?>;
 let defendersInterval = 200;
 let frame = 0;
 let gameOver = false;
@@ -225,13 +242,12 @@ function handleTowers() {
         for (let j = 0; j < enemies.length; j++){
  
        
-            if ( collisiontowers( enemies[j], towersdeux[0])){
+            if (collisiontowers(enemies[j], towersdeux[0])){
             
                 enemies[j].movement = 0;
                 towersdeux[0].health -= enemies[j].damage ;
                 if (towersdeux[0].health < 0) {
                     gameOver = true;
-                    score_final = score;
                 }
     
         }}
@@ -250,7 +266,7 @@ function handleTowers() {
                     ctx.fillText('You win with ' + score + ' points!', 134, 340);
                     towersdeux[1].health = 0;
                     ctx.fillText(Math.floor(towersdeux[1].health), this.x , this.y);
-
+                    
                     canvas.requestAnimationFrame(animate);
                 }
                 
@@ -743,6 +759,8 @@ function handleEnemies(){
         if (enemies[i].health <= 0){
             let gainedResources = enemies[i].maxHealth/10;
             numberOfResources += gainedResources;
+            floatingMessages.push(new floatingMessage('+' + gainedResources, 700+positionX, 80, 30, 'gold'));
+            numberOfResources += gainedResources;
             score += gainedResources;
             const findThisIndex = enemyPositions.indexOf(enemies[i].y);
             enemyPositions.splice(findThisIndex, 1);
@@ -765,10 +783,10 @@ function handleEnemies(){
         let verticalPosition = 4 * cellSize + cellGap;
         if(Math.random()*100 > 90){
          
-            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 30, 300, enemyTypes[2]));
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 30, <?= $_GET['enemy3'] ?>, enemyTypes[2]));
         }
         else if(Math.random()*100 > 45){
-            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, a, enemyTypes[1]));
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, <?= $_GET['enemy2'] ?>, enemyTypes[1]));
             if (this.shooting){
                 this.timer++;
                 this.movement = 0 ;
@@ -786,7 +804,7 @@ function handleEnemies(){
             }
         }
         else if(Math.random()*100 > 0){
-            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, 100, enemyTypes[0]));
+            enemies.push(new Enemy(verticalPosition, Math.random() * 2.4 + 2.9, 10, <?= $_GET['enemy1'] ?>, enemyTypes[0]));
         }
         
         enemyPositions.push(verticalPosition);
@@ -909,12 +927,7 @@ $test = $_SESSION['membre']["login"];
 
 ?>
 
-<script>
-    var caca = "boudin";
-    var x = "jsToPhp = " + "<?php echo"$test"?>";
-        document.write(x);
 
-</script>
 
 
 
