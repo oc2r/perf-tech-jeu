@@ -5,7 +5,7 @@ require "function.php";
 //si la session membre existe alors je redirige vers l'acceuil:
 
 if(isset($_SESSION['membre'])) {
-    header('location:../home.php');
+    header('location:../gameDispay.php');
 }
 //si le form est posté:
 
@@ -32,7 +32,7 @@ if($_POST) {
             $_SESSION['membre']['login'] = $membre['login'];
 
             //je redirige vers la page d'acceuil
-            header('location:../home.php');
+            header('location:../gameDispay.php');
 
         } else {
             //le mdp est incorrect :
