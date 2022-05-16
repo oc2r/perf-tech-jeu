@@ -868,12 +868,12 @@ function handleGameStatus(){
     
     }
     if (towersdeux[1].health <= 0 ){
-        canvas.requestAnimationFrame(animate);
         ctx.fillStyle = 'black';
         ctx.font = '60px Orbitron';
         ctx.fillText('LEVEL COMPLETE', 130 + positionX, 300);
         ctx.font = '30px Orbitron';
         ctx.fillText('You win with ' + score + ' points!', 134 +positionX, 340);
+        canvas.requestAnimationFrame(animate);
     }
 }
 
