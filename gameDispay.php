@@ -440,7 +440,7 @@ class Defender {
             ctx.fillStyle = 'gold';
             ctx.font = '30px Orbitron';
             ctx.fillText(Math.floor(this.health), this.x + 15, this.y + 30);
-            ctx.drawImage(defenderType[0], this.frameX * this.spriteWidthUser1, 0, this.spriteWidthUser1, this.spriteHeightUser1, this.x -100 , this.y - 100, 300, 300);
+            ctx.drawImage(defenderTypes[0], this.frameX * this.spriteWidthUser1, 0, this.spriteWidthUser1, this.spriteHeightUser1, this.x -100 , this.y - 100, 300, 300);
 
         }
         if (this.chosenDefender === 2) {
@@ -868,14 +868,13 @@ function handleGameStatus(){
     
     }
     if (towersdeux[1].health <= 0 ){
+        canvas.requestAnimationFrame(animate);
         ctx.fillStyle = 'black';
         ctx.font = '60px Orbitron';
         ctx.fillText('LEVEL COMPLETE', 130 + positionX, 300);
         ctx.font = '30px Orbitron';
         ctx.fillText('You win with ' + score + ' points!', 134 +positionX, 340);
-        canvas.requestAnimationFrame(animate);
     }
-
 }
 
 function toggle() {
