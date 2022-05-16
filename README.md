@@ -9,6 +9,8 @@ importer la base de données jeu(1).sql
 
 
 #### Lancement du jeu ####
+Allez sur la branche Finalmain
+
 Lancer la page index.php
 
 s'inscrire
